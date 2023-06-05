@@ -2,9 +2,7 @@ FROM --platform=linux/amd64 rocker/tidyverse
 
 # install system dependencies for R packages
 RUN apt-get update \
-  && apt-get install -y libcurl4-openssl-dev libssl-dev make libicu-dev libxml2-dev \
-  zlib1g-dev libfontconfig1-dev libfreetype6-dev libfribidi-dev libharfbuzz-dev libjpeg-dev \
-  libpng-dev libtiff-dev pandoc git libgit2-dev \
+  && apt-get install -y git\
   && rm -rf /var/lib/apt/lists/*
 
 RUN Rscript -e 'install.packages(c("pak", "renv"))'
