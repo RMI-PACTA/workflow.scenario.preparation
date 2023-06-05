@@ -1,0 +1,16 @@
+version: "3.2"
+
+services:
+  scenario_prep:
+    build:
+      context: .
+    volumes:
+      - type: bind
+        source: ${HOST_INPUTS_PATH}
+        target: /inputs
+      - type: bind
+        source: ${HOST_OUTPUTS_PATH}
+        target: /outputs
+      - type: bind
+        source: .
+        target: /workflow.scenario.preparation
