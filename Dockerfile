@@ -5,17 +5,20 @@ RUN apt-get update \
   && apt-get install -y git \
   && rm -rf /var/lib/apt/lists/*
 
-RUN Rscript -e 'install.packages(c("pak", "renv"))'
+# copy in DESCRIPTION from this repo
+COPY DESCRIPTION /DESCRIPTION
+
+# install pak, find dependencies from DESCRIPTION, and install them
+RUN Rscript -e "\
+    install.packages('pak'); \
+    deps <- pak::local_deps(root = '.'); \
+    pkg_deps <- deps[!deps[['direct']], 'ref']; \
+    print(pkg_deps); \
+    pak::pak(pkg_deps); \
+    "
 
 COPY . /workflow.scenario.preparation
 
 WORKDIR /workflow.scenario.preparation
-
-RUN Rscript -e '\
-  readRenviron(".env"); \
-  non_cran_pkg_deps <- c("RMI-PACTA/pacta.scenario.data.preparation"); \
-  cran_pkg_deps <- setdiff(renv::dependencies()$Package, basename(non_cran_pkg_deps)); \
-  pak::pkg_install(pkg = c(non_cran_pkg_deps, cran_pkg_deps)); \
-  '
 
 CMD Rscript run_pacta_scenario_preparation.R
