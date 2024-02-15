@@ -52,5 +52,4 @@ RUN Rscript -e "\
   cran_pkg_deps <- setdiff(renv::dependencies()$Package, basename(non_cran_pkg_deps)); \
   pak::pkg_install(pkg = c(non_cran_pkg_deps, cran_pkg_deps)); \
   "
-
-CMD Rscript run_pacta_scenario_preparation.R
+CMD ["Rscript","run_pacta_scenario_preparation.R"]
