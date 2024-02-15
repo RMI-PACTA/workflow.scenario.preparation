@@ -2,8 +2,14 @@ Package: workflow.scenario.preparation
 Title: Run the Scenario Preparation Workflow
 Version: 0.0.0.9000
 Authors@R: 
-    person("Jackson", "Hoffart", , "jackson.hoffart@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-8600-5042"))
+    person(c(person(given = "Jackson",
+             family = "Hoffart",
+             role = c("aut", "cre", "ctr"),
+             email = "jackson.hoffart@gmail.com",
+             comment = c(ORCID = "0000-0002-8600-5042")),
+      person(given = "RMI",
+             role = c("cph", "fnd"),
+             email = "PACTA4investors@rmi.org"))
 Description: A workflow to prepare climate change scenarios for the PACTA tool.
 License: MIT + file LICENSE
 Encoding: UTF-8
