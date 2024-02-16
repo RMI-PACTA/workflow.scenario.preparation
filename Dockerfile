@@ -1,8 +1,6 @@
 # using rocker r-vers as a base with R 4.3.1
 # https://hub.docker.com/r/rocker/r-ver
 # https://rocker-project.org/images/versioned/r-ver.html
-
-# set proper base image
 ARG R_VERS="4.3.1"
 FROM rocker/r-ver:$R_VERS AS base
 
