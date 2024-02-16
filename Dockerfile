@@ -2,7 +2,6 @@ FROM --platform=linux/amd64 rocker/tidyverse
 
 # install system dependencies for R packages
 RUN apt-get update \
-  && apt-get install -y git \
   && rm -rf /var/lib/apt/lists/*
 
 # copy in DESCRIPTION from this repo
