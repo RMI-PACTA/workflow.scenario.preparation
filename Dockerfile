@@ -1,11 +1,6 @@
 # using rocker r-vers as a base with R 4.3.1
 # https://hub.docker.com/r/rocker/r-ver
 # https://rocker-project.org/images/versioned/r-ver.html
-#
-# sets CRAN repo to use Posit Package Manager to freeze R package versions to
-# those available on 2023-10-30
-# https://packagemanager.posit.co/client/#/repos/2/overview
-# https://packagemanager.posit.co/cran/__linux__/jammy/2023-10-30
 
 # set proper base image
 ARG R_VERS="4.3.1"
@@ -29,28 +24,34 @@ ARG DEBCONF_NOWARNINGS="yes"
 
 # install system dependencies
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-      git=1:2.34.* \
-    && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/*
 
-# set frozen CRAN repo
+
+# sets CRAN repo to use Posit Package Manager to freeze R package versions to
+# those available on 2023-10-30
+# https://packagemanager.posit.co/client/#/repos/2/overview
+# https://packagemanager.posit.co/cran/__linux__/jammy/2023-10-30
 ARG CRAN_REPO="https://packagemanager.posit.co/cran/__linux__/jammy/2023-10-30"
 
 RUN echo "options(repos = c(CRAN = '$CRAN_REPO'), pkg.sysreqs = FALSE)" >> "${R_HOME}/etc/Rprofile.site" \
   && Rscript -e "\
     install.packages('pak'); \
-    pak::pak('renv'); \
+    "
+
+# copy in DESCRIPTION from this repo
+COPY DESCRIPTION /DESCRIPTION
+
+# install pak, find dependencies from DESCRIPTION, and install them
+RUN Rscript -e "\
+    deps <- pak::local_deps(root = '.'); \
+    pkg_deps <- deps[!deps[['direct']], 'ref']; \
+    print(pkg_deps); \
+    pak::pak(pkg_deps); \
     "
 
 COPY . /workflow.scenario.preparation
 
 WORKDIR /workflow.scenario.preparation
 
-RUN Rscript -e '\
-  readRenviron(".env"); \
-  non_cran_pkg_deps <- c("RMI-PACTA/pacta.scenario.data.preparation"); \
-  cran_pkg_deps <- setdiff(renv::dependencies()$Package, basename(non_cran_pkg_deps)); \
-  pak::pkg_install(pkg = c(non_cran_pkg_deps, cran_pkg_deps)); \
-  '
-
 CMD ["Rscript","run_pacta_scenario_preparation.R"]
+
