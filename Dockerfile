@@ -51,5 +51,5 @@ COPY . /workflow.scenario.preparation
 
 WORKDIR /workflow.scenario.preparation
 
-CMD ["Rscript","run_pacta_scenario_preparation.R"]
+CMD ["Rscript","main.R"]
 
