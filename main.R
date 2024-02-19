@@ -1,31 +1,141 @@
-library(readr)
-library(dplyr)
-library(pacta.data.validation)
-library(stringr)
-library(tidyr)
-source(here::here("data-raw/utils.R"))
-library(dotenv)
+logger::log_threshold("INFO")
+logger::log_formatter(logger::formatter_glue)
 
+
+# config -----------------------------------------------------------------------
+
+logger::log_info("Loading configuration file.")
+
+if (Sys.getenv("R_CONFIG_ACTIVE") != "desktop") {
+  readRenviron(".env")
+}
+
+#config_name <- Sys.getenv("R_CONFIG_ACTIVE")
+config_name <- "2022Q4"
+config <- config::get(
+  file = "config.yml",
+  config = config_name,
+  use_parent = FALSE
+)
+
+scenario_preparation_inputs_path <- config$scenario_preparation_inputs_path
+scenario_preparation_outputs_path <- config$scenario_preparation_outputs_path
+technology_bridge_filename <- config$technology_bridge_filename
+geco_2022_automotive_filename <- config$geco_2022_automotive_filename
+geco_2022_aviation_filename <- config$geco_2022_aviation_filename
+geco_2022_fossil_fuels_15c_filename <- config$geco_2022_fossil_fuels_15c_filename
+geco_2022_fossil_fuels_ndc_filename <- config$geco_2022_fossil_fuels_ndc_filename
+geco_2022_fossil_fuels_ref_filename <- config$geco_2022_fossil_fuels_ref_filename
+geco_2022_power_15c_filename <- config$geco_2022_power_15c_filename
+geco_2022_power_ndc_filename <- config$geco_2022_power_ndc_filename
+geco_2022_power_ref_filename <- config$geco_2022_power_ref_filename
+geco_2022_steel_filename <- config$geco_2022_steel_filename
+
+
+# input filepaths --------------------------------------------------------------
 # Important - Raw data with scenario formula is in:
 # Dropbox (RMI)/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022
+geco2022_raw_path <- fs::path(scenario_preparation_inputs_path, "GECO2022")
 
-# define paths ------------------------------------------------------------
-dotenv::load_dot_env()
+# general files
+technology_bridge_filepath <- fs::path(
+  scenario_preparation_inputs_path,
+  technology_bridge_filename
+)
 
-input_path_scenario <- Sys.getenv("DIR_SCENARIO")
-geco2022_raw_path <-file.path(input_path_scenario, "GECO2022")
-
-
-# load data ---------------------------------------------------------------
+# geco 2022 specific files
 
 # GECO only provides retirement and stocks, Antoine had to manually compute the
 # sales on excel
 #processed data, calculation are made in /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/processed_data/where_calculation_are_made
+geco_2022_automotive_filepath <- fs::path(
+  geco2022_raw_path,
+  "processed_data/used_in_pacta.scenario.preparation",
+  geco_2022_automotive_filename
+)
 
-auto_scenario <- readr::read_csv(
-  file.path(geco2022_raw_path, "processed_data/used_in_pacta.scenario.preparation/geco2022_automotive_stocks_geco2021_retirement_rates_CORRECTED.csv"),
+#processed data, calculation are made in /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/processed_data/where_calculation_are_made
+geco_2022_aviation_filepath <- fs::path(
+  geco2022_raw_path,
+  "processed_data/used_in_pacta.scenario.preparation",
+  geco_2022_aviation_filename
+)
+
+# Raw data has been sent to us by JRC GECO in /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/20230213_PACTA data request_GECO data template_NDC-LTS_data_reg.xlsx
+# Next file is a csv formatting of sheet "Fossil Fuel Extraction"
+geco_2022_fossil_fuels_15c_filepath <- fs::path(
+  geco2022_raw_path,
+  "formatted_from_raw_data/used",
+  geco_2022_fossil_fuels_15c_filename
+)
+
+geco_2022_fossil_fuels_ndc_filepath <- fs::path(
+  geco2022_raw_path,
+  "formatted_from_raw_data/used",
+  geco_2022_fossil_fuels_ndc_filename
+)
+
+geco_2022_fossil_fuels_ref_filepath <- fs::path(
+  geco2022_raw_path,
+  "formatted_from_raw_data/used",
+  geco_2022_fossil_fuels_ref_filename
+)
+
+# Raw data has been sent to us by JRC GECO in /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/20230213_PACTA data request_GECO data template_NDC-LTS_data_reg.xlsx
+# Next file is a csv formatting of sheet "Capacity"
+
+geco_2022_power_15c_filepath <- fs::path(
+  geco2022_raw_path,
+  "formatted_from_raw_data/used",
+  geco_2022_power_15c_filename
+)
+
+geco_2022_power_ndc_filepath <- fs::path(
+  geco2022_raw_path,
+  "formatted_from_raw_data/used",
+  geco_2022_power_ndc_filename
+)
+
+geco_2022_power_ref_filepath <- fs::path(
+  geco2022_raw_path,
+  "formatted_from_raw_data/used",
+  geco_2022_power_ref_filename
+)
+
+
+geco_2022_steel_filepath <- fs::path(
+  geco2022_raw_path,
+  "processed_data/used_in_pacta.scenario.preparation",
+  geco_2022_steel_filename
+)
+
+logger::log_info("Checking that filepaths exist.")
+stopifnot(fs::file_exists(technology_bridge_filepath))
+stopifnot(fs::file_exists(geco_2022_automotive_filepath))
+stopifnot(fs::file_exists(geco_2022_aviation_filepath))
+stopifnot(fs::file_exists(geco_2022_fossil_fuels_15c_filepath))
+stopifnot(fs::file_exists(geco_2022_fossil_fuels_ndc_filepath))
+stopifnot(fs::file_exists(geco_2022_fossil_fuels_ref_filepath))
+stopifnot(fs::file_exists(geco_2022_power_15c_filepath))
+stopifnot(fs::file_exists(geco_2022_power_ndc_filepath))
+stopifnot(fs::file_exists(geco_2022_power_ref_filepath))
+stopifnot(fs::file_exists(geco_2022_steel_filepath))
+
+# load data ---------------------------------------------------------------
+logger::log_info("Loading data.")
+technology_bridge <- readr::read_csv(
+  technology_bridge_filepath,
   na = "",
-  col_types = cols(
+  col_types = readr::cols(
+    TechnologyAll = "c",
+    TechnologyName = "c"
+  )
+)
+
+geco_2022_automotive_raw <- readr::read_csv(
+  geco_2022_automotive_filepath,
+  na = "",
+  col_types = readr::cols(
     GECO = "c",
     Scenario = "c",
     Vehicle = "c",
@@ -38,12 +148,10 @@ auto_scenario <- readr::read_csv(
   )
 )
 
-#processed data, calculation are made in /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/processed_data/where_calculation_are_made
-
-aviation_scenario <- readr::read_csv(
-  file.path(geco2022_raw_path, "processed_data/used_in_pacta.scenario.preparation/GECO2022_Aviation_processed_data.csv"),
+geco_2022_aviation_raw <- readr::read_csv(
+  geco_2022_aviation_filepath,
   na = "",
-  col_types = cols(
+  col_types = readr::cols(
     GECO = "c",
     Scenario = "c",
     Variable = "c",
@@ -55,13 +163,10 @@ aviation_scenario <- readr::read_csv(
   )
 )
 
-# Raw data has been sent to us by JRC GECO in /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/20230213_PACTA data request_GECO data template_NDC-LTS_data_reg.xlsx
-# Next file is a csv formatting of sheet "Fossil Fuel Extraction"
-
-ff_scenario_15c <- readr::read_csv(
-  file.path(geco2022_raw_path, "formatted_from_raw_data/used/geco2022_15c_ff_rawdata.csv"),
+geco_2022_fossil_fuels_15c_raw <- readr::read_csv(
+  geco_2022_fossil_fuels_15c_filepath,
   na = "",
-  col_types = cols(
+  col_types = readr::cols(
     GECO = "c",
     Scenario = "c",
     Variable = "c",
@@ -72,14 +177,10 @@ ff_scenario_15c <- readr::read_csv(
   )
 )
 
-
-# Raw data has been sent to us by JRC GECO in /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/20230213_PACTA data request_GECO data template_NDC-LTS_data_reg.xlsx
-# Next file is a csv formatting of sheet "Fossil Fuel Extraction"
-
-ff_scenario_ndc <- readr::read_csv(
-  file.path(geco2022_raw_path, "formatted_from_raw_data/used/geco2022_ndc_ff_rawdata.csv"),
+geco_2022_fossil_fuels_ndc_raw <- readr::read_csv(
+  geco_2022_fossil_fuels_ndc_filepath,
   na = "",
-  col_types = cols(
+  col_types = readr::cols(
     GECO = "c",
     Scenario = "c",
     Variable = "c",
@@ -90,13 +191,10 @@ ff_scenario_ndc <- readr::read_csv(
   )
 )
 
-# Raw data has been sent to us by JRC GECO in /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/20230213_PACTA data request_GECO data template_ref_data_reg.xlsx
-# Next file is a csv formatting of sheet "Fossil Fuel Extraction"
-
-ff_scenario_ref <- readr::read_csv(
-  file.path(geco2022_raw_path, "formatted_from_raw_data/used/geco2022_ref_ff_rawdata.csv"),
+geco_2022_fossil_fuels_ref_raw <- readr::read_csv(
+  geco_2022_fossil_fuels_ref_filepath,
   na = "",
-  col_types = cols(
+  col_types = readr::cols(
     GECO = "c",
     Scenario = "c",
     Variable = "c",
@@ -107,10 +205,10 @@ ff_scenario_ref <- readr::read_csv(
   )
 )
 
-power_scenario_15c <- readr::read_csv(
-  file.path(geco2022_raw_path, "formatted_from_raw_data/used/geco2022_15c_power_rawdata_region.csv"),
+geco_2022_power_15c_raw <- readr::read_csv(
+  geco_2022_power_15c_filepath,
   na = "",
-  col_types = cols(
+  col_types = readr::cols(
     GECO = "c",
     Scenario = "c",
     Variable = "c",
@@ -121,13 +219,10 @@ power_scenario_15c <- readr::read_csv(
   )
 )
 
-# Raw data has been sent to us by JRC GECO in /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/20230213_PACTA data request_GECO data template_NDC-LTS_data_reg.xlsx
-# Next file is a csv formatting of sheet "Capacity"
-
-power_scenario_ndc <- readr::read_csv(
-  file.path(geco2022_raw_path, "formatted_from_raw_data/used/geco2022_ndc_power_rawdata_region.csv"),
+geco_2022_power_ndc_raw <- readr::read_csv(
+  geco_2022_power_ndc_filepath,
   na = "",
-  col_types = cols(
+  col_types = readr::cols(
     GECO = "c",
     Scenario = "c",
     Variable = "c",
@@ -138,13 +233,10 @@ power_scenario_ndc <- readr::read_csv(
   )
 )
 
-# Raw data has been sent to us by JRC GECO in /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/20230213_PACTA data request_GECO data template_ref_data_reg.xlsx
-# Next file is a csv formatting of sheet "Capacity"
-
-power_scenario_ref <- readr::read_csv(
-  file.path(geco2022_raw_path, "formatted_from_raw_data/used/geco2022_ref_power_rawdata_region.csv"),
+geco_2022_power_ref_raw <- readr::read_csv(
+  geco_2022_power_ref_filepath,
   na = "",
-  col_types = cols(
+  col_types = readr::cols(
     GECO = "c",
     Scenario = "c",
     Variable = "c",
@@ -159,10 +251,10 @@ power_scenario_ref <- readr::read_csv(
 # Raw data related to power generation come from /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/GECO2022_20221221_15C.xlsx - line 26 & 110
 # Calculation are made in GECO2022_Steel_processed_data.xlsx
 
-steel_scenario <- readr::read_csv(
-  file.path(geco2022_raw_path, "processed_data/used_in_pacta.scenario.preparation/GECO2022_Steel_processed_data.csv"),
+geco_2022_steel_raw <- readr::read_csv(
+  geco_2022_steel_filepath,
   na = "",
-  col_types = cols(
+  col_types = readr::cols(
     Source = "c",
     Sector = "c",
     Scenario = "c",
@@ -171,48 +263,48 @@ steel_scenario <- readr::read_csv(
   )
 )
 
-technology_bridge <- readr::read_csv(
-  here::here("data-raw/technology_bridge.csv"),
-  na = "",
-  col_types = cols(
-    TechnologyName = "c",
-    TechnologyAll = "c"
-  )
-)
-
-
 # format automotive ------------------------------------------------------------
 
 # TODO: currently still using retirement rates from geco2021
 # needs to be revisited, once we get an update
+logger::log_info("Formatting GECO 2022 automotive data.")
+geco_2022_automotive <- janitor::clean_names(geco_2022_automotive_raw)
+geco_2022_automotive <- dplyr::left_join(
+  geco_2022_automotive,
+  technology_bridge,
+  by = c("technology" = "TechnologyAll")
+)
+geco_2022_automotive <- dplyr::mutate(
+  geco_2022_automotive,
+  technology = NULL
+)
+geco_2022_automotive <- dplyr::rename(
+  geco_2022_automotive,
+  technology = TechnologyName
+)
 
-auto_scenario_cleaned_names <- janitor::clean_names(auto_scenario)
+geco_2022_automotive <- tidyr::pivot_longer(
+  geco_2022_automotive,
+  cols = tidyr::matches("x20[0-9]{2}$"),
+  names_to = "year",
+  names_prefix = "x",
+  names_transform = list(year = as.numeric),
+  values_to = "value",
+  values_ptypes = numeric()
+)
 
-auto_harmonized_technology_names <- auto_scenario_cleaned_names %>%
-  left_join(technology_bridge, by = c("technology" = "TechnologyAll")) %>%
-  select(-"technology") %>%
-  rename(technology = "TechnologyName")
+geco_2022_automotive <- dplyr::mutate(
+  geco_2022_automotive,
+  vehicle = NULL
+)
 
-auto_long <- auto_harmonized_technology_names %>%
-  pivot_longer(
-    cols = matches("x20[0-9]{2}$"),
-    names_to = "year",
-    names_prefix = "x",
-    names_transform = list(year = as.numeric),
-    values_to = "value",
-    values_ptypes = numeric()
-  )
-
-auto_harmonized_values <- auto_long %>%
-  select(-"vehicle")
-
-auto_harmonized_names <- auto_harmonized_values %>%
-  rename(
-    source = "geco",
-    scenario_geography = "region",
-    units = "unit",
-    indicator = "variable"
-  )
+geco_2022_automotive <- dplyr::rename(
+  geco_2022_automotive,
+  source = "geco",
+  scenario_geography = "region",
+  units = "unit",
+  indicator = "variable"
+)
 
 scenario_groups <- c(
   "source",
@@ -225,144 +317,178 @@ scenario_groups <- c(
   "year"
 )
 
-auto_aggregated <- auto_harmonized_names %>%
-  summarise(
-    value = sum(.data$value, na.rm = TRUE),
-    .by = all_of(scenario_groups)
-  )
+geco_2022_automotive <- dplyr::summarise(
+  geco_2022_automotive,
+  value = sum(.data$value, na.rm = TRUE),
+  .by = tidyr::all_of(scenario_groups)
+)
 
-geco2022_auto <- auto_aggregated %>%
-  mutate(
-    sector = ifelse(
-      .data$sector == "Light vehicles", "Automotive", "HDV"
-    )
+geco_2022_automotive <- dplyr::mutate(
+  geco_2022_automotive,
+  sector = ifelse(
+    .data$sector == "Light vehicles", "Automotive", "HDV"
   )
+)
 
 
 # format fossil fuels ----------------------------------------------------------
+logger::log_info("Formatting GECO 2022 fossil fuels data.")
+geco_2022_fossil_fuels <- dplyr::bind_rows(
+  geco_2022_fossil_fuels_15c_raw,
+  geco_2022_fossil_fuels_ndc_raw,
+  geco_2022_fossil_fuels_ref_raw
+)
 
-ff_scenario <- ff_scenario_15c %>%
-  bind_rows(ff_scenario_ndc) %>%
-  bind_rows(ff_scenario_ref)
+geco_2022_fossil_fuels <- janitor::clean_names(geco_2022_fossil_fuels)
 
-ff_scenario_cleaned_names <- janitor::clean_names(ff_scenario)
+geco_2022_fossil_fuels <- dplyr::rename(
+  geco_2022_fossil_fuels,
+  source = "geco",
+  scenario_geography = "region",
+  technology = "fuel",
+  units = "unit",
+  indicator = "variable"
+)
 
-ff_harmonized_names <- ff_scenario_cleaned_names %>%
-  rename(
-    source = "geco",
-    scenario_geography = "region",
-    technology = "fuel",
-    units = "unit",
-    indicator = "variable"
-  ) %>%
-  select(-"x1")
+geco_2022_fossil_fuels <- dplyr::mutate(
+  geco_2022_fossil_fuels,
+  x1 = NULL
+)
 
-ff_with_sector <- ff_harmonized_names %>%
-  mutate(
-    sector = ifelse(.data$technology == "Coal", "Coal", "Oil&Gas")
-  )
+geco_2022_fossil_fuels <- dplyr::mutate(
+  geco_2022_fossil_fuels,
+  sector = ifelse(.data$technology == "Coal", "Coal", "Oil&Gas")
+)
 
-ff_harmonized_technology_names <- ff_with_sector %>%
-  left_join(technology_bridge, by = c("technology" = "TechnologyAll")) %>%
-  select(-"technology") %>%
-  rename(technology = "TechnologyName")
+geco_2022_fossil_fuels <- dplyr::left_join(
+  geco_2022_fossil_fuels,
+  technology_bridge,
+  by = c("technology" = "TechnologyAll")
+)
 
-ff_long <- ff_harmonized_technology_names %>%
-  pivot_longer(
-    cols = matches("x20[0-9]{2}$"),
-    names_to = "year",
-    names_prefix = "x",
-    names_transform = list(year = as.numeric),
-    values_to = "value",
-    values_ptypes = numeric()
-  )
+geco_2022_fossil_fuels <- dplyr::mutate(
+  geco_2022_fossil_fuels,
+  technology = NULL
+)
 
-geco2022_ff <- ff_long %>%
-  mutate(year = as.double(.data$year))
+geco_2022_fossil_fuels <- dplyr::rename(
+  geco_2022_fossil_fuels,
+  technology = "TechnologyName"
+)
+
+geco_2022_fossil_fuels <- tidyr::pivot_longer(
+  geco_2022_fossil_fuels,
+  cols = matches("x20[0-9]{2}$"),
+  names_to = "year",
+  names_prefix = "x",
+  names_transform = list(year = as.numeric),
+  values_to = "value",
+  values_ptypes = numeric()
+)
+
+geco_2022_fossil_fuels <- dplyr::mutate(
+  geco_2022_fossil_fuels,
+  year = as.double(.data$year)
+)
 
 
 # format power -----------------------------------------------------------------
+logger::log_info("Formatting GECO 2022 power data.")
+geco_2022_power <- dplyr::bind_rows(
+  geco_2022_power_15c_raw,
+  geco_2022_power_ndc_raw,
+  geco_2022_power_ref_raw
+)
 
-power_scenario <- power_scenario_15c %>%
-  bind_rows(power_scenario_ndc) %>%
-  bind_rows(power_scenario_ref) %>%
-  filter(!Technology %in% c("Coal with CCUS", "Gas with CCUS", "Biomass & Waste CCUS")) # actually those technology are already included in Coal/Gas/Biomass and capacities are actually double counted if we don't filter
+geco_2022_power <- dplyr::filter(
+  geco_2022_power,
+  # actually those technology are already included in Coal/Gas/Biomass and capacities are actually double counted if we don't filter
+  !Technology %in% c("Coal with CCUS", "Gas with CCUS", "Biomass & Waste CCUS")
+)
 
-power_scenario_cleaned_names <- janitor::clean_names(power_scenario)
+geco_2022_power <- janitor::clean_names(geco_2022_power)
 
-power_harmonized_names <- power_scenario_cleaned_names %>%
-  rename(
-    source = "geco",
-    scenario_geography = "region",
-    units = "unit",
-    indicator = "variable"
+geco_2022_power <- dplyr::rename(
+  geco_2022_power,
+  source = "geco",
+  scenario_geography = "region",
+  units = "unit",
+  indicator = "variable"
+)
+
+
+geco_2022_power <- dplyr::mutate(
+  geco_2022_power,
+  sector = "Power"
+)
+
+geco_2022_power <- dplyr::mutate(
+  geco_2022_power,
+  technology = dplyr::case_when(
+    .data$indicator == "Capacity" & grepl("Coal", .data$technology) ~ "CoalCap",
+    .data$indicator == "Capacity" & grepl("Oil", .data$technology) ~ "OilCap",
+    .data$indicator == "Capacity" & grepl("Gas", .data$technology) ~ "GasCap",
+    .data$technology == "Other" ~ "RenewablesCap",
+    TRUE ~ .data$technology
   )
+)
 
-power_with_sector <- power_harmonized_names %>%
-  mutate(
-    sector = "Power"
-  )
+geco_2022_power <- dplyr::left_join(geco_2022_power, technology_bridge, by = c("technology" = "TechnologyAll"))
+geco_2022_power <- dplyr::mutate(geco_2022_power, technology = NULL)
+geco_2022_power <- dplyr::rename(geco_2022_power, technology = "TechnologyName")
 
-power_harmonized_technology_names <- power_with_sector %>%
-  mutate(
-    technology = case_when(
-      .data$indicator == "Capacity" & grepl("Coal", .data$technology) ~ "CoalCap",
-      .data$indicator == "Capacity" & grepl("Oil", .data$technology) ~ "OilCap",
-      .data$indicator == "Capacity" & grepl("Gas", .data$technology) ~ "GasCap",
-      .data$technology == "Other" ~ "RenewablesCap",
-      TRUE ~ .data$technology
-    )
-  ) %>%
-  left_join(technology_bridge, by = c("technology" = "TechnologyAll")) %>%
-  select(-"technology") %>%
-  rename(technology = "TechnologyName")
 
-power_long <- power_harmonized_technology_names %>%
-  pivot_longer(
-    cols = matches("x20[0-9]{2}$"),
-    names_to = "year",
-    names_prefix = "x",
-    names_transform = list(year = as.numeric),
-    values_to = "value",
-    values_ptypes = numeric()
-  ) %>%
+geco_2022_power <- tidyr::pivot_longer(
+  geco_2022_power,
+  cols = tidyr::matches("x20[0-9]{2}$"),
+  names_to = "year",
+  names_prefix = "x",
+  names_transform = list(year = as.numeric),
+  values_to = "value",
+  values_ptypes = numeric()
+)
+
+geco_2022_power <- dplyr::mutate(
   # raw data is off by a magnitude of 1000. Provided capacity values are MW, but
   # unit displays GW. We fix by dividing by 1000 and thus keep ourr standardized
   # unit of GW power capacity
-  dplyr::mutate(
-    value = .data$value / 1000
-  )
+  geco_2022_power,
+  value = .data$value / 1000
+)
 
-power_relevant_regions <- power_long %>%
-  mutate(
-    scenario_geography = case_when(
-      .data$scenario_geography == "United Kingdom" ~ "UK",
-      .data$scenario_geography == "Mediterranean Middle-East" ~ "Mediteranean Middle East",
-      .data$scenario_geography == "Tunisia, Morocco and Western Sahara" ~ "Morocco & Tunisia",
-      .data$scenario_geography == "Algeria and Libya" ~ "Algeria & Libya",
-      .data$scenario_geography == "Rest of Central America and Caribbean" ~ "Rest Central America",
-      .data$scenario_geography == "Rest of Balkans" ~ "Others Balkans",
-      .data$scenario_geography == "Rest of Persian Gulf" ~ "Rest Gulf",
-      .data$scenario_geography == "Rest of Pacific" ~ "Rest Pacific",
-      .data$scenario_geography == "Rest of Sub-Saharan Africa" ~ "Rest Sub Saharan Africa",
-      .data$scenario_geography == "Rest of South America" ~ "Rest South America",
-      .data$scenario_geography == "Rest of South Asia" ~ "Rest South Asia",
-      .data$scenario_geography == "Rest of South-East Asia" ~ "Rest South East Asia",
-      .data$scenario_geography == "Russian Federation" ~ "Russia",
-      .data$scenario_geography == "Saudi Arabia" ~ "SaudiArabia",
-      .data$scenario_geography == "United States" ~ "US",
-      .data$scenario_geography == "South Africa" ~ "SouthAfrica",
-      .data$scenario_geography == "European Union" ~ "EU",
-      .data$scenario_geography == "Korea (Republic)" ~ "South Korea",
-      .data$scenario_geography == "Rest of CIS" ~ "Other CIS",
-      TRUE ~ .data$scenario_geography
-    )
-  ) %>%
-  filter(
-    .data$scenario_geography != "Switzerland",
-    .data$scenario_geography != "Iceland",
-    .data$scenario_geography != "Norway"
+
+geco_2022_power <- dplyr::mutate(
+  geco_2022_power,
+  scenario_geography = dplyr::case_when(
+    .data$scenario_geography == "United Kingdom" ~ "UK",
+    .data$scenario_geography == "Mediterranean Middle-East" ~ "Mediteranean Middle East",
+    .data$scenario_geography == "Tunisia, Morocco and Western Sahara" ~ "Morocco & Tunisia",
+    .data$scenario_geography == "Algeria and Libya" ~ "Algeria & Libya",
+    .data$scenario_geography == "Rest of Central America and Caribbean" ~ "Rest Central America",
+    .data$scenario_geography == "Rest of Balkans" ~ "Others Balkans",
+    .data$scenario_geography == "Rest of Persian Gulf" ~ "Rest Gulf",
+    .data$scenario_geography == "Rest of Pacific" ~ "Rest Pacific",
+    .data$scenario_geography == "Rest of Sub-Saharan Africa" ~ "Rest Sub Saharan Africa",
+    .data$scenario_geography == "Rest of South America" ~ "Rest South America",
+    .data$scenario_geography == "Rest of South Asia" ~ "Rest South Asia",
+    .data$scenario_geography == "Rest of South-East Asia" ~ "Rest South East Asia",
+    .data$scenario_geography == "Russian Federation" ~ "Russia",
+    .data$scenario_geography == "Saudi Arabia" ~ "SaudiArabia",
+    .data$scenario_geography == "United States" ~ "US",
+    .data$scenario_geography == "South Africa" ~ "SouthAfrica",
+    .data$scenario_geography == "European Union" ~ "EU",
+    .data$scenario_geography == "Korea (Republic)" ~ "South Korea",
+    .data$scenario_geography == "Rest of CIS" ~ "Other CIS",
+    TRUE ~ .data$scenario_geography
   )
+)
+
+geco_2022_power <- dplyr::filter(
+  geco_2022_power,
+  .data$scenario_geography != "Switzerland",
+  .data$scenario_geography != "Iceland",
+  .data$scenario_geography != "Norway"
+)
 
 scenario_groups <- c(
   "source",
@@ -375,184 +501,211 @@ scenario_groups <- c(
   "year"
 )
 
-power_geco_aggregated <- power_long %>%
-  summarise(
-    value = sum(.data$value, na.rm = TRUE),
-    .by = all_of(scenario_groups)
-  )
-
-geco2022_power <- power_geco_aggregated
+geco_2022_power <- dplyr::summarise(
+  geco_2022_power,
+  value = sum(.data$value, na.rm = TRUE),
+  .by = tidyr::all_of(scenario_groups)
+)
 
 
 # format steel ------------------------------------------------------------
+logger::log_info("Formatting GECO 2022 steel data.")
+geco_2022_steel <- janitor::clean_names(geco_2022_steel_raw)
 
-steel_scenario_cleaned_names <- janitor::clean_names(steel_scenario)
+geco_2022_steel <- dplyr::rename(geco_2022_steel, scenario_geography = "region")
 
-steel_scenario_harmonized_names <- steel_scenario_cleaned_names %>%
-  rename(scenario_geography = "region")
+geco_2022_steel <- dplyr::mutate(
+  geco_2022_steel,
+  units = "tCO2/t Steel",
+  indicator = "Emission Intensity",
+  technology = NA_character_
+)
 
-steel_scenario_complete_variables <- steel_scenario_harmonized_names %>%
-  mutate(
-    units = "tCO2/t Steel",
-    indicator = "Emission Intensity",
-    technology = NA_character_
-  )
+geco_2022_steel <- tidyr::pivot_longer(
+  geco_2022_steel,
+  cols = tidyr::matches("x[0-9]{4}$"),
+  names_to = "year",
+  names_prefix = "x",
+  names_transform = list(year = as.numeric),
+  values_to = "value",
+  values_ptypes = numeric()
+)
 
-steel_long <- steel_scenario_complete_variables %>%
-  pivot_longer(
-    cols = matches("x[0-9]{4}$"),
-    names_to = "year",
-    names_prefix = "x",
-    names_transform = list(year = as.numeric),
-    values_to = "value",
-    values_ptypes = numeric()
-  )
+geco_2022_steel <- dplyr::relocate(
+  geco_2022_steel,
+  c("source", "scenario", "indicator", "sector", "technology", "units", "scenario_geography", "year", "value")
+)
 
-geco2022_steel <- steel_long %>%
-  relocate(c("source", "scenario", "indicator", "sector", "technology", "units", "scenario_geography", "year", "value")) %>%
-  mutate(year = as.double(.data$year))
+geco_2022_steel <- dplyr::mutate(geco_2022_steel, year = as.double(.data$year))
 
 # format aviation ------------------------------------------------------------
+logger::log_info("Formatting GECO 2022 aviation data.")
+geco_2022_aviation <- janitor::clean_names(geco_2022_aviation_raw)
 
-aviation_scenario_cleaned_names <- janitor::clean_names(aviation_scenario)
+geco_2022_aviation <- dplyr::rename(
+  geco_2022_aviation,
+  source = "geco",
+  scenario_geography = "region",
+  units = "unit",
+  indicator = "variable"
+)
 
-aviation_scenario_harmonized_names <- aviation_scenario_cleaned_names %>%
-  rename(
-    source = "geco",
-    scenario_geography = "region",
-    units = "unit",
-    indicator = "variable"
-  ) %>%
-  select(-"passenger_freight") %>%
-  mutate(
-    sector = "Aviation",
-    indicator = stringr::str_to_title(.data$indicator)
-  )
+geco_2022_aviation <- dplyr::mutate(
+  geco_2022_aviation,
+  passenger_freight = NULL
+)
 
-aviation_long <- aviation_scenario_harmonized_names %>%
-  pivot_longer(
-    cols = matches("x[0-9]{4}$"),
-    names_to = "year",
-    names_prefix = "x",
-    names_transform = list(year = as.numeric),
-    values_to = "value",
-    values_ptypes = numeric()
-  )
 
-geco2022_aviation <- aviation_long %>%
-  relocate(
-    c("source", "scenario", "indicator", "sector", "technology", "units", "scenario_geography", "year", "value")
-  ) %>%
-  mutate(year = as.double(.data$year))
+geco_2022_aviation <- dplyr::mutate(
+  geco_2022_aviation,
+  sector = "Aviation",
+  indicator = stringr::str_to_title(.data$indicator)
+)
+
+geco_2022_aviation <- tidyr::pivot_longer(
+  geco_2022_aviation,
+  cols = tidyr::matches("x[0-9]{4}$"),
+  names_to = "year",
+  names_prefix = "x",
+  names_transform = list(year = as.numeric),
+  values_to = "value",
+  values_ptypes = numeric()
+)
+
+geco_2022_aviation <- dplyr::relocate(
+  geco_2022_aviation,
+  c("source", "scenario", "indicator", "sector", "technology", "units", "scenario_geography", "year", "value")
+)
+
+geco_2022_aviation <- dplyr::mutate(
+  geco_2022_aviation,
+  year = as.double(.data$year)
+)
 
 
 # combine and format ------------------------------------------------------
-
-geco_total <- rbind(
-  geco2022_power,
-  geco2022_auto,
-  geco2022_ff,
-  geco2022_aviation,
-  geco2022_steel
+logger::log_info("Combining and formatting GECO 2022 data.")
+geco_2022 <- rbind(
+  geco_2022_power,
+  geco_2022_automotive,
+  geco_2022_fossil_fuels,
+  geco_2022_aviation,
+  geco_2022_steel
 )
 
-geco_2022_formatted_technologies <- geco_total %>%
-  mutate(
-    technology = gsub("oil", "Oil", .data$technology),
-    technology = gsub("gas", "Gas", .data$technology),
-    technology = gsub("coal", "Coal", .data$technology),
-    technology = gsub("cap", "Cap", .data$technology),
-    technology = gsub("hybrid", "Hybrid", .data$technology),
-    technology = gsub("electric", "Electric", .data$technology),
-    technology = gsub("ice", "ICE", .data$technology),
-    technology = gsub("fuelcell", "FuelCell", .data$technology),
-    technology = gsub("renewables", "Renewables", .data$technology),
-    technology = gsub("hydro", "Hydro", .data$technology),
-    technology = gsub("nuclear", "Nuclear", .data$technology),
-    sector = gsub("oil&gas", "Oil&Gas", .data$sector),
-    sector = gsub("coal", "Coal", .data$sector),
-    sector = gsub("power", "Power", .data$sector),
-    sector = gsub("automotive", "Automotive", .data$sector),
-    sector = gsub("heavy-duty vehicles", "HDV", .data$sector)
-  ) %>%
-  mutate(
-    technology = ifelse(
-      .data$sector == "hdv", paste0(.data$technology, "_hdv"), .data$technology
-    )
+geco_2022 <- dplyr::mutate(
+  geco_2022,
+  technology = gsub("oil", "Oil", .data$technology),
+  technology = gsub("gas", "Gas", .data$technology),
+  technology = gsub("coal", "Coal", .data$technology),
+  technology = gsub("cap", "Cap", .data$technology),
+  technology = gsub("hybrid", "Hybrid", .data$technology),
+  technology = gsub("electric", "Electric", .data$technology),
+  technology = gsub("ice", "ICE", .data$technology),
+  technology = gsub("fuelcell", "FuelCell", .data$technology),
+  technology = gsub("renewables", "Renewables", .data$technology),
+  technology = gsub("hydro", "Hydro", .data$technology),
+  technology = gsub("nuclear", "Nuclear", .data$technology),
+  sector = gsub("oil&gas", "Oil&Gas", .data$sector),
+  sector = gsub("coal", "Coal", .data$sector),
+  sector = gsub("power", "Power", .data$sector),
+  sector = gsub("automotive", "Automotive", .data$sector),
+  sector = gsub("heavy-duty vehicles", "HDV", .data$sector)
+)
+
+geco_2022 <- dplyr::mutate(
+  geco_2022,
+  technology = ifelse(
+    .data$sector == "hdv", paste0(.data$technology, "_hdv"), .data$technology
   )
+)
 
-geco_2022_harmonized_geographies <- geco_2022_formatted_technologies %>%
-  mutate(
-    scenario_geography = case_when(
-      .data$scenario_geography == "NOAP" ~ "Algeria & Libya",
-      .data$scenario_geography == "MEME" ~ "Mediteranean Middle East",
-      .data$scenario_geography == "NOAN" ~ "Morocco & Tunisia",
-      .data$scenario_geography == "NZL" ~ "New Zealand",
-      .data$scenario_geography == "RCIS" ~ "Other CIS",
-      .data$scenario_geography == "RCAM" ~ "Rest Central America",
-      .data$scenario_geography == "RCEU" ~ "Other Balkan",
-      .data$scenario_geography == "RSAM" ~ "Rest South America",
-      .data$scenario_geography == "RSAS" ~ "Rest South Asia",
-      .data$scenario_geography == "RSEA" ~ "Rest South East Asia",
-      .data$scenario_geography == "RSAF" ~ "Rest Sub Saharan Africa",
-      .data$scenario_geography == "RGLF" ~ "Rest Gulf",
-      .data$scenario_geography == "RPAC" ~ "Rest Pacific",
-      .data$scenario_geography == "KOR" ~ "South Korea",
-      .data$scenario_geography == "World" ~ "Global",
-      .data$scenario_geography == "THA" ~ "Thailand",
-      .data$scenario_geography == "EU" ~ "EU27",
-      .data$scenario_geography == "NOR" ~ "Norway",
-      .data$scenario_geography == "ISL" ~ "Iceland",
-      .data$scenario_geography == "CHE" ~ "Switzerland",
-      .data$scenario_geography == "TUR" ~ "Turkey",
-      .data$scenario_geography == "RUS" ~ "Russia",
-      .data$scenario_geography == "USA" ~ "US",
-      .data$scenario_geography == "CAN" ~ "Canada",
-      .data$scenario_geography == "BRA" ~ "Brazil",
-      .data$scenario_geography == "ARG" ~ "Argentina",
-      .data$scenario_geography == "CHL" ~ "Chile",
-      .data$scenario_geography == "AUS" ~ "Australia",
-      .data$scenario_geography == "JPN" ~ "Japan",
-      .data$scenario_geography == "CHN" ~ "China",
-      .data$scenario_geography == "IND" ~ "India",
-      .data$scenario_geography == "SAU" ~ "Saudi Arabia",
-      .data$scenario_geography == "IRN" ~ "Iran",
-      .data$scenario_geography == "EGY" ~ "Egypt",
-      .data$scenario_geography == "ZAF" ~ "South Africa",
-      .data$scenario_geography == "MEX" ~ "Mexico",
-      .data$scenario_geography == "IDN" ~ "Indonesia",
-      .data$scenario_geography == "UKR" ~ "Ukraine",
-      .data$scenario_geography == "MYS" ~ "Malaysia",
-      .data$scenario_geography == "VNM" ~ "Vietnam",
-      .data$scenario_geography == "GBR" ~ "UK",
-      TRUE ~ .data$scenario_geography
-    )
-  ) %>%
-  ungroup() %>%
-  filter(.data$source == "GECO2022")
-
-geco_2022_harmonized_scenario_names <- geco_2022_harmonized_geographies %>%
-  mutate(
-    scenario = case_when(
-      grepl("1.5", .data$scenario) ~ "1.5C",
-      grepl("NDC", .data$scenario) ~ "NDC_LTS",
-      grepl("Ref", .data$scenario) ~ "Reference",
-      TRUE ~ NA_character_
-    )
+geco_2022 <- dplyr::mutate(
+  geco_2022,
+  scenario_geography = dplyr::case_when(
+    .data$scenario_geography == "NOAP" ~ "Algeria & Libya",
+    .data$scenario_geography == "MEME" ~ "Mediteranean Middle East",
+    .data$scenario_geography == "NOAN" ~ "Morocco & Tunisia",
+    .data$scenario_geography == "NZL" ~ "New Zealand",
+    .data$scenario_geography == "RCIS" ~ "Other CIS",
+    .data$scenario_geography == "RCAM" ~ "Rest Central America",
+    .data$scenario_geography == "RCEU" ~ "Other Balkan",
+    .data$scenario_geography == "RSAM" ~ "Rest South America",
+    .data$scenario_geography == "RSAS" ~ "Rest South Asia",
+    .data$scenario_geography == "RSEA" ~ "Rest South East Asia",
+    .data$scenario_geography == "RSAF" ~ "Rest Sub Saharan Africa",
+    .data$scenario_geography == "RGLF" ~ "Rest Gulf",
+    .data$scenario_geography == "RPAC" ~ "Rest Pacific",
+    .data$scenario_geography == "KOR" ~ "South Korea",
+    .data$scenario_geography == "World" ~ "Global",
+    .data$scenario_geography == "THA" ~ "Thailand",
+    .data$scenario_geography == "EU" ~ "EU27",
+    .data$scenario_geography == "NOR" ~ "Norway",
+    .data$scenario_geography == "ISL" ~ "Iceland",
+    .data$scenario_geography == "CHE" ~ "Switzerland",
+    .data$scenario_geography == "TUR" ~ "Turkey",
+    .data$scenario_geography == "RUS" ~ "Russia",
+    .data$scenario_geography == "USA" ~ "US",
+    .data$scenario_geography == "CAN" ~ "Canada",
+    .data$scenario_geography == "BRA" ~ "Brazil",
+    .data$scenario_geography == "ARG" ~ "Argentina",
+    .data$scenario_geography == "CHL" ~ "Chile",
+    .data$scenario_geography == "AUS" ~ "Australia",
+    .data$scenario_geography == "JPN" ~ "Japan",
+    .data$scenario_geography == "CHN" ~ "China",
+    .data$scenario_geography == "IND" ~ "India",
+    .data$scenario_geography == "SAU" ~ "Saudi Arabia",
+    .data$scenario_geography == "IRN" ~ "Iran",
+    .data$scenario_geography == "EGY" ~ "Egypt",
+    .data$scenario_geography == "ZAF" ~ "South Africa",
+    .data$scenario_geography == "MEX" ~ "Mexico",
+    .data$scenario_geography == "IDN" ~ "Indonesia",
+    .data$scenario_geography == "UKR" ~ "Ukraine",
+    .data$scenario_geography == "MYS" ~ "Malaysia",
+    .data$scenario_geography == "VNM" ~ "Vietnam",
+    .data$scenario_geography == "GBR" ~ "UK",
+    TRUE ~ .data$scenario_geography
   )
+)
 
-if (any(is.na(unique(geco_2022_harmonized_scenario_names$scenario)))) {
+geco_2022 <- dplyr::ungroup(geco_2022)
+geco_2022 <- dplyr::filter(geco_2022, .data$source == "GECO2022")
+
+
+geco_2022 <- dplyr::mutate(
+  geco_2022,
+  scenario = dplyr::case_when(
+    grepl("1.5", .data$scenario) ~ "1.5C",
+    grepl("NDC", .data$scenario) ~ "NDC_LTS",
+    grepl("Ref", .data$scenario) ~ "Reference",
+    TRUE ~ NA_character_
+  )
+)
+
+if (any(is.na(unique(geco_2022$scenario)))) {
   stop("Unique scenario names are not well-defined. Please review!")
 }
 
-geco_2022 <- select(
-  geco_2022_harmonized_scenario_names,
-  standardized_scenario_columns()
+geco_2022 <- dplyr::select(
+  geco_2022,
+  pacta.scenario.data.preparation:::standardized_scenario_columns()
 )
 
-if (validate_intermediate_scenario_output(geco_2022)) {
-  usethis::use_data(
+#FIXME: This line is for testing refactoring from pacta.scenario.preparation
+#Remove once satisfied!
+waldo::compare(
+  geco_2022,
+  pacta.scenario.preparation::geco_2022,
+  #ignore small floating points differences
+  tolerance = 1e-6
+)
+
+if (pacta.data.validation::validate_intermediate_scenario_output(geco_2022)) {
+  logger::log_info("GECO 2022 data is valid.")
+  readr::write_csv(
     geco_2022,
-    overwrite = TRUE
+    fs::path(scenario_preparation_outputs_path, "geco_2022.csv")
   )
+} else {
+  rlang::abort("GECO 2022 data is not valid.")
 }
