@@ -688,7 +688,7 @@ geco_2022 <- dplyr::filter(geco_2022, .data$source == "GECO2022")
 geco_2022 <- dplyr::mutate(
   geco_2022,
   scenario = dplyr::case_when(
-    grepl("1.5", .data$scenario) ~ "1.5C",
+    grepl(pattern = "1.5", x = .data$scenario) ~ "1.5C",
     grepl("NDC", .data$scenario) ~ "NDC_LTS",
     grepl("Ref", .data$scenario) ~ "Reference",
     TRUE ~ NA_character_
