@@ -8,6 +8,8 @@ logger::log_info("Loading configuration file.")
 
 config_name <- Sys.getenv("R_CONFIG_ACTIVE")
 
+logger::log_info("Getting config: {config_name}")
+
 config <- config::get(
   file = "config.yml",
   config = config_name,
