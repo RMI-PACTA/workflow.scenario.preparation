@@ -65,7 +65,7 @@ geco_2022_aviation_filepath <- fs::path(
   geco_2022_aviation_filename
 )
 
-# Raw data has been sent to us by JRC GECO in:
+# Raw data has been sent to us via email by JRC GECO in:
 # /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/20230213_PACTA data request_GECO data template_NDC-LTS_data_reg.xlsx
 # Next file is a csv formatting of sheet "Fossil Fuel Extraction"
 geco_2022_fossil_fuels_15c_filepath <- fs::path(
