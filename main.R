@@ -58,8 +58,8 @@ geco_2022_automotive_filepath <- fs::path(
   geco_2022_automotive_filename
 )
 
-#processed data, calculation are made in:
-#/Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/processed_data/where_calculation_are_made
+# processed data, calculation are made in:
+# /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/processed_data/where_calculation_are_made
 geco_2022_aviation_filepath <- fs::path(
   geco2022_raw_path,
   "processed_data",
