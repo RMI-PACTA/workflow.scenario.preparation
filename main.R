@@ -6,12 +6,9 @@ logger::log_formatter(logger::formatter_glue)
 
 logger::log_info("Loading configuration file.")
 
-if (Sys.getenv("R_CONFIG_ACTIVE") != "desktop") {
-  readRenviron(".env")
-}
+readRenviron(".env")
+config_name <- Sys.getenv("R_CONFIG_ACTIVE")
 
-#config_name <- Sys.getenv("R_CONFIG_ACTIVE")
-config_name <- "2022Q4"
 config <- config::get(
   file = "config.yml",
   config = config_name,
@@ -694,7 +691,7 @@ geco_2022 <- dplyr::select(
 #FIXME: This line is for testing refactoring from pacta.scenario.preparation
 #Remove once satisfied!
 waldo::compare(
-  geco_2022,
+  geco_2022, #prepared by workflow.scenario.preparation
   pacta.scenario.preparation::geco_2022,
   #ignore small floating points differences
   tolerance = 1e-6
