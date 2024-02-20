@@ -33,24 +33,19 @@ ARG CRAN_REPO="https://packagemanager.posit.co/cran/__linux__/jammy/2023-10-30"
 
 RUN echo "options(repos = c(CRAN = '$CRAN_REPO'), pkg.sysreqs = FALSE)" >> "${R_HOME}/etc/Rprofile.site" \
   && Rscript -e "\
-    install.packages('pak'); \
-    "
+  install.packages('pak'); \
+  "
 
 # copy in DESCRIPTION from this repo
 COPY DESCRIPTION /DESCRIPTION
 
 # install pak, find dependencies from DESCRIPTION, and install them
 RUN Rscript -e "\
-    deps <- pak::local_deps(root = '.'); \
-    pkg_deps <- deps[!deps[['direct']], 'ref']; \
-    print(pkg_deps); \
-    pak::pak(pkg_deps); \
-    "
-
-COPY .env /.env
-RUN Rscript -e '\
-  readRenviron(".env"); \
-  '
+  deps <- pak::local_deps(root = '.'); \
+  pkg_deps <- deps[!deps[['direct']], 'ref']; \
+  print(pkg_deps); \
+  pak::pak(pkg_deps); \
+  "
 
 COPY . /workflow.scenario.preparation
 
