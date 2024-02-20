@@ -47,6 +47,11 @@ RUN Rscript -e "\
     pak::pak(pkg_deps); \
     "
 
+COPY .env /.env
+RUN Rscript -e '\
+  readRenviron(".env"); \
+  '
+
 COPY . /workflow.scenario.preparation
 
 WORKDIR /workflow.scenario.preparation
