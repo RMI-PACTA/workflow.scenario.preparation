@@ -608,6 +608,8 @@ geco_2022 <- rbind(
   geco_2022_steel
 )
 
+geco_2022 <- dplyr::filter(geco_2022, .data$source == "GECO2022")
+
 geco_2022 <- dplyr::mutate(
   geco_2022,
   technology = gsub("oil", "Oil", .data$technology),
@@ -682,8 +684,6 @@ geco_2022 <- dplyr::mutate(
     TRUE ~ .data$scenario_geography
   )
 )
-
-geco_2022 <- dplyr::filter(geco_2022, .data$source == "GECO2022")
 
 
 geco_2022 <- dplyr::mutate(
