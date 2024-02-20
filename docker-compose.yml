@@ -6,12 +6,14 @@ services:
       context: .
     environment:
       R_CONFIG_ACTIVE: ${R_CONFIG_ACTIVE:-2022Q4}
+      SCENARIO_PREPARATION_INPUTS_PATH: /mnt/inputs
+      SCENARIO_PREPARATION_OUTPUTS_PATH: /mnt/outputs
     volumes:
       - type: bind
-        source: ${HOST_INPUTS_PATH:-./inputs}
+        source: ${SCENARIO_PREPARATION_INPUTS_PATH:-./inputs}
         # target must be kept in sync with config.yml
-        target: /inputs
+        target: /mnt/inputs
       - type: bind
-        source: ${HOST_OUTPUTS_PATH:-./outputs}
+        source: ${SCENARIO_PREPARATION_OUTPUTS_PATH:-./outputs}
         # target must be kept in sync with config.yml
-        target: /outputs
+        target: /mnt/outputs
