@@ -40,11 +40,13 @@ Use the `R_CONFIG_ACTIVE` environment variable to specify the active configurati
 
 ### Create a `.env` File
 
+**This file is only necessary for running with `Docker`**
+
 Create a `.env` file in the root directory with the following structure:
 
 ``` env
-HOST_INPUTS_PATH=/PATH/TO/SCENARIO/DATA/INPUTS
-HOST_OUTPUTS_PATH=/PATH/TO/SCENARIO/DATA/OUTPUTS
+SCENARIO_PREPARATION_INPUTS_PATH=/PATH/TO/SCENARIO/DATA/INPUTS
+SCENARIO_PREPARATION_OUTPUTS_PATH=/PATH/TO/SCENARIO/DATA/OUTPUTS
 R_CONFIG_ACTIVE=YYYYQQ
 ```
 
