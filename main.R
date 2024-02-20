@@ -15,9 +15,12 @@ config <- config::get(
   use_parent = FALSE
 )
 
+logger::log_info("Setting general config.")
 scenario_preparation_inputs_path <- config$scenario_preparation_inputs_path
 scenario_preparation_outputs_path <- config$scenario_preparation_outputs_path
 technology_bridge_filename <- config$technology_bridge_filename
+
+logger::log_info("Setting GECO 2022 config.")
 geco_2022_automotive_filename <- config$geco_2022_automotive_filename
 geco_2022_aviation_filename <- config$geco_2022_aviation_filename
 geco_2022_fossil_fuels_15c_filename <- config$geco_2022_fossil_fuels_15c_filename
@@ -30,9 +33,6 @@ geco_2022_steel_filename <- config$geco_2022_steel_filename
 
 
 # input filepaths --------------------------------------------------------------
-# Important - Raw data with scenario formula is in:
-# Dropbox (RMI)/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022
-geco2022_raw_path <- fs::path(scenario_preparation_inputs_path, "GECO2022")
 
 # general files
 technology_bridge_filepath <- fs::path(
@@ -41,24 +41,31 @@ technology_bridge_filepath <- fs::path(
 )
 
 # geco 2022 specific files
+# Raw data with scenario formula is in:
+# Dropbox (RMI)/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022
+geco2022_raw_path <- fs::path(scenario_preparation_inputs_path, "GECO2022")
+
 
 # GECO only provides retirement and stocks, Antoine had to manually compute the
 # sales on excel
-#processed data, calculation are made in /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/processed_data/where_calculation_are_made
+# processed data, calculation are made in:
+# /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/processed_data/where_calculation_are_made
 geco_2022_automotive_filepath <- fs::path(
   geco2022_raw_path,
   "processed_data/used_in_pacta.scenario.preparation",
   geco_2022_automotive_filename
 )
 
-#processed data, calculation are made in /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/processed_data/where_calculation_are_made
+#processed data, calculation are made in:
+#/Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/processed_data/where_calculation_are_made
 geco_2022_aviation_filepath <- fs::path(
   geco2022_raw_path,
   "processed_data/used_in_pacta.scenario.preparation",
   geco_2022_aviation_filename
 )
 
-# Raw data has been sent to us by JRC GECO in /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/20230213_PACTA data request_GECO data template_NDC-LTS_data_reg.xlsx
+# Raw data has been sent to us by JRC GECO in:
+# /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/20230213_PACTA data request_GECO data template_NDC-LTS_data_reg.xlsx
 # Next file is a csv formatting of sheet "Fossil Fuel Extraction"
 geco_2022_fossil_fuels_15c_filepath <- fs::path(
   geco2022_raw_path,
@@ -78,9 +85,9 @@ geco_2022_fossil_fuels_ref_filepath <- fs::path(
   geco_2022_fossil_fuels_ref_filename
 )
 
-# Raw data has been sent to us by JRC GECO in /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/20230213_PACTA data request_GECO data template_NDC-LTS_data_reg.xlsx
+# Raw data has been sent to us by JRC GECO in:
+# /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/20230213_PACTA data request_GECO data template_NDC-LTS_data_reg.xlsx
 # Next file is a csv formatting of sheet "Capacity"
-
 geco_2022_power_15c_filepath <- fs::path(
   geco2022_raw_path,
   "formatted_from_raw_data/used",
@@ -99,7 +106,12 @@ geco_2022_power_ref_filepath <- fs::path(
   geco_2022_power_ref_filename
 )
 
-
+# Raw data related to steel come from:
+# /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/20230213_PACTA data request_GECO data template_XXX_data_reg.xlsx
+# Raw data related to power generation come from:
+# /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/GECO2022_20221221_15C.xlsx - line 26 & 110
+# Calculation are made in:
+# GECO2022_Steel_processed_data.xlsx
 geco_2022_steel_filepath <- fs::path(
   geco2022_raw_path,
   "processed_data/used_in_pacta.scenario.preparation",
@@ -243,10 +255,6 @@ geco_2022_power_ref_raw <- readr::read_csv(
     .default = "d"
   )
 )
-
-# Raw data related to steel come from /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/20230213_PACTA data request_GECO data template_XXX_data_reg.xlsx
-# Raw data related to power generation come from /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/GECO2022_20221221_15C.xlsx - line 26 & 110
-# Calculation are made in GECO2022_Steel_processed_data.xlsx
 
 geco_2022_steel_raw <- readr::read_csv(
   geco_2022_steel_filepath,
