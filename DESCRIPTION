@@ -19,12 +19,14 @@ Imports:
     config,
     dplyr,
     fs,
+    janitor,
     logger,
     pacta.data.validation (>= 0.0.0.9000),
     pacta.scenario.data.preparation (>= 0.0.0.9000),
     readr,
     tidyr,
     waldo
-Remotes: 
+Remotes:  
     RMI-PACTA/pacta.scenario.data.preparation,
-    RMI-PACTA/pacta.data.validation
+    RMI-PACTA/pacta.data.validation,
+    RMI-PACTA/pacta.scenario.preparation
