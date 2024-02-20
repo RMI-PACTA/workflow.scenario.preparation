@@ -51,7 +51,8 @@ geco2022_raw_path <- fs::path(scenario_preparation_inputs_path, "GECO2022")
 # /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/processed_data/where_calculation_are_made
 geco_2022_automotive_filepath <- fs::path(
   geco2022_raw_path,
-  "processed_data/used_in_pacta.scenario.preparation",
+  "processed_data",
+  "used_in_pacta.scenario.preparation",
   geco_2022_automotive_filename
 )
 
@@ -59,7 +60,8 @@ geco_2022_automotive_filepath <- fs::path(
 #/Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/processed_data/where_calculation_are_made
 geco_2022_aviation_filepath <- fs::path(
   geco2022_raw_path,
-  "processed_data/used_in_pacta.scenario.preparation",
+  "processed_data",
+  "used_in_pacta.scenario.preparation",
   geco_2022_aviation_filename
 )
 
@@ -68,19 +70,22 @@ geco_2022_aviation_filepath <- fs::path(
 # Next file is a csv formatting of sheet "Fossil Fuel Extraction"
 geco_2022_fossil_fuels_15c_filepath <- fs::path(
   geco2022_raw_path,
-  "formatted_from_raw_data/used",
+  "formatted_from_raw_data",
+  "used",
   geco_2022_fossil_fuels_15c_filename
 )
 
 geco_2022_fossil_fuels_ndc_filepath <- fs::path(
   geco2022_raw_path,
-  "formatted_from_raw_data/used",
+  "formatted_from_raw_data",
+  "used",
   geco_2022_fossil_fuels_ndc_filename
 )
 
 geco_2022_fossil_fuels_ref_filepath <- fs::path(
   geco2022_raw_path,
-  "formatted_from_raw_data/used",
+  "formatted_from_raw_data",
+  "used",
   geco_2022_fossil_fuels_ref_filename
 )
 
@@ -89,19 +94,22 @@ geco_2022_fossil_fuels_ref_filepath <- fs::path(
 # Next file is a csv formatting of sheet "Capacity"
 geco_2022_power_15c_filepath <- fs::path(
   geco2022_raw_path,
-  "formatted_from_raw_data/used",
+  "formatted_from_raw_data",
+  "used",
   geco_2022_power_15c_filename
 )
 
 geco_2022_power_ndc_filepath <- fs::path(
   geco2022_raw_path,
-  "formatted_from_raw_data/used",
+  "formatted_from_raw_data",
+  "used",
   geco_2022_power_ndc_filename
 )
 
 geco_2022_power_ref_filepath <- fs::path(
   geco2022_raw_path,
-  "formatted_from_raw_data/used",
+  "formatted_from_raw_data",
+  "used",
   geco_2022_power_ref_filename
 )
 
@@ -113,7 +121,8 @@ geco_2022_power_ref_filepath <- fs::path(
 # GECO2022_Steel_processed_data.xlsx
 geco_2022_steel_filepath <- fs::path(
   geco2022_raw_path,
-  "processed_data/used_in_pacta.scenario.preparation",
+  "processed_data",
+  "used_in_pacta.scenario.preparation",
   geco_2022_steel_filename
 )
 
