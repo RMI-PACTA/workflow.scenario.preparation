@@ -46,10 +46,8 @@ RUN Rscript -e "\
   print(pkg_deps); \
   pak::pak(pkg_deps); \
   "
-
-COPY . /workflow.scenario.preparation
-
-WORKDIR /workflow.scenario.preparation
+COPY config.yml /config.yml
+COPY main.R /main.R
 
 CMD ["Rscript","main.R"]
 
