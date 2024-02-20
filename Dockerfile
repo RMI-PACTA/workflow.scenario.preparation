@@ -16,6 +16,8 @@ LABEL org.opencontainers.image.base.name=""
 LABEL org.opencontainers.image.ref.name=""
 LABEL org.opencontainers.image.authors=""
 
+WORKDIR /app
+
 # set apt-get to noninteractive mode
 ARG DEBIAN_FRONTEND="noninteractive"
 ARG DEBCONF_NOWARNINGS="yes"
@@ -23,7 +25,6 @@ ARG DEBCONF_NOWARNINGS="yes"
 # install system dependencies
 RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
-
 
 # sets CRAN repo to use Posit Package Manager to freeze R package versions to
 # those available on 2023-10-30
@@ -37,7 +38,7 @@ RUN echo "options(repos = c(CRAN = '$CRAN_REPO'), pkg.sysreqs = FALSE)" >> "${R_
   "
 
 # copy in DESCRIPTION from this repo
-COPY DESCRIPTION /DESCRIPTION
+COPY DESCRIPTION /app/DESCRIPTION
 
 # install pak, find dependencies from DESCRIPTION, and install them
 RUN Rscript -e "\
@@ -46,8 +47,8 @@ RUN Rscript -e "\
   print(pkg_deps); \
   pak::pak(pkg_deps); \
   "
-COPY config.yml /config.yml
-COPY main.R /main.R
+COPY config.yml /app/config.yml
+COPY main.R /app/main.R
 
 CMD ["Rscript","main.R"]
 
