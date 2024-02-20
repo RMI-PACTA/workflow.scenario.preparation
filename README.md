@@ -49,3 +49,12 @@ Files to prepare GECO 2022 are (TODO: Improve the state of this):
 Run `docker-compose up` from the root directory, and docker will build the image (if necessary), and then run the scenario preparation process.
 
 Use `docker-compose build --no-cache` to force a rebuild of the Docker image.
+
+## Running in RStudio
+
+Make sure to load your `.env` file into your R environment, then source `main.R`:
+
+``` r
+readRenviron(".env")
+source("main.R")
+```
