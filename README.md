@@ -20,6 +20,29 @@ R_CONFIG_ACTIVE=YYYYQQ
 
 This file will specify the location of the input and output directories, and the active configuration set-up (see `config.yml` for more information).
 
+## Required Input Files
+
+All required files must exist at `$HOST_INPUTS_PATH`.
+
+### General files
+
+These files are required for the preparation of all scenarios:
+
+- `technology_bridge.csv`
+
+### GECO 2022
+
+Files to prepare GECO 2022 are (TODO: Improve the state of this):
+
+- `geco2022_automotive_stocks_geco2021_retirement_rates_CORRECTED.csv`
+- `GECO2022_Aviation_processed_data.csv`
+- `geco2022_15c_ff_rawdata.csv`
+- `geco2022_ndc_ff_rawdata.csv`
+- `geco2022_ref_ff_rawdata.csv`
+- `geco2022_15c_power_rawdata_region.csv`
+- `geco2022_ndc_power_rawdata_region.csv`
+- `geco2022_ref_power_rawdata_region.csv`
+- `GECO2022_Steel_processed_data.csv`
 
 ## Running in Docker
 
