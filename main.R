@@ -45,7 +45,7 @@ technology_bridge_filepath <- fs::path(
 geco2022_raw_path <- fs::path(scenario_preparation_inputs_path, "GECO2022")
 
 
-# GECO only provides retirement and stocks, Antoine had to manually compute the
+# GECO only provides retirement and stocks, @Antoine-Lalechere had to manually compute the
 # sales on excel
 # processed data, calculation are made in:
 # /Users/antoinelalechere/RMI Dropbox/Antoine Lalechere/PACTA Dropbox/Portcheck_v2/00_Data/RawScenarioData/GECO2022/processed_data/where_calculation_are_made
