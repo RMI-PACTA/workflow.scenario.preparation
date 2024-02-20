@@ -4,13 +4,14 @@ services:
   scenario_prep:
     build:
       context: .
+    environment:
+      R_CONFIG_ACTIVE: ${R_CONFIG_ACTIVE:-2022Q4}
     volumes:
       - type: bind
-        source: ${HOST_INPUTS_PATH}
+        source: ${HOST_INPUTS_PATH:-./inputs}
+        # target must be kept in sync with config.yml
         target: /inputs
       - type: bind
-        source: ${HOST_OUTPUTS_PATH}
+        source: ${HOST_OUTPUTS_PATH:-./outputs}
+        # target must be kept in sync with config.yml
         target: /outputs
-      - type: bind
-        source: .
-        target: /workflow.scenario.preparation
