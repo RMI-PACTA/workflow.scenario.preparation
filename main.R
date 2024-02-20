@@ -6,7 +6,6 @@ logger::log_formatter(logger::formatter_glue)
 
 logger::log_info("Loading configuration file.")
 
-readRenviron(".env")
 config_name <- Sys.getenv("R_CONFIG_ACTIVE")
 
 config <- config::get(
