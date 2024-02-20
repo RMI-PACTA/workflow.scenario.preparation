@@ -1,6 +1,4 @@
 default:
-  scenario_preparation_inputs_path: "./inputs"
-  scenario_preparation_outputs_path: "./outputs"
   technology_bridge_filename: "technology_bridge.csv"
 
 2022Q4:
