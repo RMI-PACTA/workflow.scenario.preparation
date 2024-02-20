@@ -36,7 +36,7 @@ For GECO 2022, prepare the following files (TODO: Enhance this section):
 Use the `R_CONFIG_ACTIVE` environment variable to specify the active configuration in `config.yml`. This configuration file determines the active quarter, expected scenarios, and the location of raw scenario files.
 
 
-## Running with Docker (Preferred Method)
+## Running with Docker (Preferred Method for `PROD`)
 
 ### Create a `.env` File
 
@@ -59,7 +59,7 @@ Execute `docker-compose up` from the root directory to build the Docker image (i
 
 To force a rebuild of the Docker image, use `docker-compose build --no-cache`.
 
-## Running with RStudio
+## Running with RStudio (Primarily for Easier Debugging and `DEV`)
 
 Running in RStudio supports input/output data in the `.inputs/` and `./outputs/` directories, respectively (relative to the root directory).
 
