@@ -5,21 +5,21 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) 
 <!-- badges: end -->
 
-The goal of `workflow.scenario.preparation` is to prepare all input scenario datasets required as input by both the [pactaverse](https://rmi-pacta.github.io/pactaverse/) R packages (for investors), and [r2dii](https://rmi-pacta.github.io/r2dii.analysis/) R packages (for banks).
+Welcome to `workflow.scenario.preparation`! This tool is designed to streamline the preparation of input scenario datasets for use in either [workflow.data.preparation](https://github.com/RMI-PACTA/workflow.data.preparation) or the [r2dii](https://rmi-pacta.github.io/r2dii.analysis/) R packages.
 
 ## Required Input Files
 
-All required files must exist at `$HOST_INPUTS_PATH`.
+Ensure the following files exist in your input directory:
 
 ### General files
 
-These files are required for the preparation of all scenarios:
+These files are essential for preparing all scenarios:
 
 - `technology_bridge.csv`
 
 ### GECO 2022
 
-Files to prepare GECO 2022 are (TODO: Improve the state of this):
+For GECO 2022, prepare the following files (TODO: Enhance this section):
 
 - `geco2022_automotive_stocks_geco2021_retirement_rates_CORRECTED.csv`
 - `GECO2022_Aviation_processed_data.csv`
@@ -31,41 +31,48 @@ Files to prepare GECO 2022 are (TODO: Improve the state of this):
 - `geco2022_ref_power_rawdata_region.csv`
 - `GECO2022_Steel_processed_data.csv`
 
-## Run using Docker (preferred method)
+## R_CONFIG_ACTIVE
 
-### Create a `.env` file
+Use the `R_CONFIG_ACTIVE` environment variable to specify the active configuration in `config.yml`. This configuration file determines the active quarter, expected scenarios, and the location of raw scenario files.
 
-Running this workflow requires a file called `.env` in the root directory, that looks like...
+
+## Running with Docker (Preferred Method)
+
+### Create a `.env` File
+
+Create a `.env` file in the root directory with the following structure:
 
 ```
 HOST_INPUTS_PATH=/PATH/TO/SCENARIO/DATA/INPUTS
 HOST_OUTPUTS_PATH=/PATH/TO/SCENARIO/DATA/OUTPUTS
-R_CONFIG_ACTIVE=YYYYQQ # this sets the active configuration in `config.yml`
+R_CONFIG_ACTIVE=YYYYQQ
 ```
 
-You may use the `example.env` file as a template.
+You can use the `example.env` file as a template.
 
-This file will specify the location of the input and output directories, and the active configuration set-up (see `config.yml` for more information).
+This file specifies the input/output directories and the active configuration (see `config.yml` for details).
 
-### Running the Docker container
 
-Run `docker-compose up` from the root directory, and docker will build the image (if necessary), and then run the scenario preparation process.
+### Running the Docker Container
 
-Use `docker-compose build --no-cache` to force a rebuild of the Docker image.
+Execute `docker-compose up` from the root directory to build the Docker image (if necessary) and run the scenario preparation process.
 
-## Running using RStudio
+To force a rebuild of the Docker image, use `docker-compose build --no-cache`.
 
-Running in RStudio only supports input and output data in the `.inputs/` and `./outputs/` directories, respectively (relative to the root directory).
+## Running with RStudio
 
-Set your `R_CONFIG_ACTIVE` by calling something like:
-``` r
+Running in RStudio supports input/output data in the `.inputs/` and `./outputs/` directories, respectively (relative to the root directory).
+
+Set `R_CONFIG_ACTIVE`:
+
+```r
 Sys.setenv(R_CONFIG_ACTIVE = "YYYYQQ")
 ```
 
-then source `main.R`:
+Then, source `main.R`:
 
-``` r
+```r
 source("main.R")
 ```
 
-(or you may also step through it line-by-line for debugging purposes).
+Alternatively, you can step through the script line-by-line for debugging.
