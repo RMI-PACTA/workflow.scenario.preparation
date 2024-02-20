@@ -705,15 +705,3 @@ if (pacta.data.validation::validate_intermediate_scenario_output(geco_2022)) {
 } else {
   rlang::abort("GECO 2022 data is not valid.")
 }
-
-# This chunk can be uncommented to manually validate the data
-# Note: This will only work if the pacta.scenario.preparation package is installed
-# Which will not work in Docker, since it is a private package.
-#
-# TODO: Remove this once satisfied!
-# waldo::compare(
-#   geco_2022, #prepared by workflow.scenario.preparation
-#   pacta.scenario.preparation::geco_2022,
-#   #ignore small floating points differences
-#   tolerance = 1e-6
-# )
