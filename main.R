@@ -335,8 +335,7 @@ scenario_groups <- c(
 geco_2022_automotive <- dplyr::summarise(
   geco_2022_automotive,
   value = sum(.data$value, na.rm = TRUE),
-  .by = tidyr::all_of(scenario_groups),
-  .groups = "drop"
+  .by = tidyr::all_of(scenario_groups)
 )
 
 geco_2022_automotive <- dplyr::mutate(
@@ -520,8 +519,7 @@ scenario_groups <- c(
 geco_2022_power <- dplyr::summarise(
   geco_2022_power,
   value = sum(.data$value, na.rm = TRUE),
-  .by = tidyr::all_of(scenario_groups),
-  .groups = "drop"
+  .by = tidyr::all_of(scenario_groups)
 )
 
 
