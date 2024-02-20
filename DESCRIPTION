@@ -27,5 +27,4 @@ Imports:
     tidyr
 Remotes:  
     RMI-PACTA/pacta.scenario.data.preparation,
-    RMI-PACTA/pacta.data.validation,
-    RMI-PACTA/pacta.scenario.preparation
+    RMI-PACTA/pacta.data.validation
