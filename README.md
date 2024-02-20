@@ -9,7 +9,7 @@ Welcome to `workflow.scenario.preparation`! This tool is designed to streamline 
 
 ## Required Input Files
 
-Ensure the following files exist in your input directory:
+Ensure the following files exist in your input directory (default `./inputs`):
 
 ### General files
 
