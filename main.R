@@ -697,7 +697,7 @@ geco_2022 <- dplyr::mutate(
 )
 
 if (any(is.na(unique(geco_2022$scenario)))) {
-  stop("Unique scenario names are not well-defined. Please review!")
+  logger::log_error("`NA` scenario names are not well-defined. Please review!")
 }
 
 geco_2022 <- dplyr::select(
@@ -712,5 +712,5 @@ if (pacta.data.validation::validate_intermediate_scenario_output(geco_2022)) {
     fs::path(scenario_preparation_outputs_path, "geco_2022.csv")
   )
 } else {
-  rlang::abort("GECO 2022 data is not valid.")
+  logger::log_error("GECO 2022 data is not valid.")
 }
