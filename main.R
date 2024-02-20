@@ -1,6 +1,31 @@
 logger::log_threshold("INFO")
 logger::log_formatter(logger::formatter_glue)
 
+# file i/o ----------------------------------------------------------------------
+
+scenario_preparation_inputs_path <- Sys.getenv(
+  "SCENARIO_PREPARATION_INPUTS_PATH",
+  "./inputs"
+)
+
+if (fs::dir_exists(scenario_preparation_inputs_path)) {
+  logger::log_info("Setting scenario preparation inputs path: {scenario_preparation_inputs_path}")
+} else {
+  logger::log_error("Scenario preparation inputs path does not exist: {scenario_preparation_inputs_path}")
+}
+
+
+scenario_preparation_outputs_path <- Sys.getenv(
+  "SCENARIO_PREPARATION_OUTPUTS_PATH",
+  "./outputs"
+)
+
+if (fs::dir_exists(scenario_preparation_inputs_path)) {
+  logger::log_info("Setting scenario preparation outputs path: {scenario_preparation_outputs_path}")
+} else {
+  logger::log_error("Scenario preparation outputs path does not exist: {scenario_preparation_outputs_path}")
+}
+
 
 # config -----------------------------------------------------------------------
 
@@ -17,8 +42,6 @@ config <- config::get(
 )
 
 logger::log_info("Setting general config.")
-scenario_preparation_inputs_path <- config$scenario_preparation_inputs_path
-scenario_preparation_outputs_path <- config$scenario_preparation_outputs_path
 technology_bridge_filename <- config$technology_bridge_filename
 
 logger::log_info("Setting GECO 2022 config.")
