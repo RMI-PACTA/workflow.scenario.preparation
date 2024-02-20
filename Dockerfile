@@ -50,5 +50,5 @@ RUN Rscript -e "\
 COPY config.yml /app/config.yml
 COPY main.R /app/main.R
 
-CMD ["Rscript","main.R"]
+CMD ["Rscript", "/app/main.R"]
 
