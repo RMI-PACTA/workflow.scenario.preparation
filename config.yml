@@ -1,0 +1,14 @@
+default:
+  technology_bridge_filename: "technology_bridge.csv"
+
+2022Q4:
+  geco_2022_path: "GECO2022"
+  geco_2022_automotive_filename: "geco2022_automotive_stocks_geco2021_retirement_rates_CORRECTED.csv"
+  geco_2022_aviation_filename: "GECO2022_Aviation_processed_data.csv"
+  geco_2022_fossil_fuels_15c_filename: "geco2022_15c_ff_rawdata.csv"
+  geco_2022_fossil_fuels_ndc_filename: "geco2022_ndc_ff_rawdata.csv"
+  geco_2022_fossil_fuels_ref_filename: "geco2022_ref_ff_rawdata.csv"
+  geco_2022_power_15c_filename: "geco2022_15c_power_rawdata_region.csv"
+  geco_2022_power_ndc_filename: "geco2022_ndc_power_rawdata_region.csv"
+  geco_2022_power_ref_filename: "geco2022_ref_power_rawdata_region.csv"
+  geco_2022_steel_filename: "GECO2022_Steel_processed_data.csv"
