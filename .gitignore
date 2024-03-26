@@ -54,3 +54,6 @@ rsconnect/
 # inputs/ and outputs/ dirs
 inputs/
 outputs/
+
+# Annoying macOS artifacts
+.DS_Store
