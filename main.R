@@ -20,7 +20,7 @@ scenario_preparation_outputs_path <- Sys.getenv(
   "./outputs"
 )
 
-if (fs::dir_exists(scenario_preparation_inputs_path)) {
+if (fs::dir_exists(scenario_preparation_outputs_path)) {
   logger::log_info("Setting scenario preparation outputs path: {scenario_preparation_outputs_path}")
 } else {
   logger::log_error("Scenario preparation outputs path does not exist: {scenario_preparation_outputs_path}")
