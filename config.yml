@@ -1,14 +1,14 @@
 default:
-  technology_bridge_filename: "technology_bridge.csv"
 
-2022Q4:
-  geco_2022_path: "GECO2022"
-  geco_2022_automotive_filename: "geco2022_automotive_stocks_geco2021_retirement_rates_CORRECTED.csv"
-  geco_2022_aviation_filename: "GECO2022_Aviation_processed_data.csv"
-  geco_2022_fossil_fuels_15c_filename: "geco2022_15c_ff_rawdata.csv"
-  geco_2022_fossil_fuels_ndc_filename: "geco2022_ndc_ff_rawdata.csv"
-  geco_2022_fossil_fuels_ref_filename: "geco2022_ref_ff_rawdata.csv"
-  geco_2022_power_15c_filename: "geco2022_15c_power_rawdata_region.csv"
-  geco_2022_power_ndc_filename: "geco2022_ndc_power_rawdata_region.csv"
-  geco_2022_power_ref_filename: "geco2022_ref_power_rawdata_region.csv"
-  geco_2022_steel_filename: "GECO2022_Steel_processed_data.csv"
+geco_2023:
+  geco_2023_raw_path: "geco_2023-20240201"
+  geco_2023_15c_raw_filename: "20240129_PACTA data request_GECO data template_15C_data.xlsx"
+  geco_2023_ndc_raw_filename: "20240129_PACTA data request_GECO data template_NDC-LTS_data.xlsx"
+  geco_2023_ref_raw_filename: "20240129_PACTA data request_GECO data template_Ref_data.xlsx"
+  geco_2023_supplement_path: "geco_2023_supplemental-20240227/GECO2023_20231219"
+  geco_2023_supplement_15c_raw_filename: "GECO2023_20231219_15C_Total.xlsx"
+  geco_2023_supplement_ndc_raw_filename: "GECO2023_20231219_NDC_Total.xlsx"
+  geco_2023_supplement_ref_raw_filename: "GECO2023_20231219_Ref_Total.xlsx"
+
+2023Q4:
+  inherits: geco_2023
