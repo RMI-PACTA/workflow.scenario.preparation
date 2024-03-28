@@ -1,4 +1,4 @@
-logger::log_info("Setting GECO 2023 config.")
+logger::log_info("GECO 2023: Setting GECO 2023 config.")
 
 geco_2023_raw_path <- config[["geco_2023_raw_path"]]
 geco_2023_15c_raw_filename <- config[["geco_2023_15c_raw_filename"]]
@@ -10,7 +10,7 @@ geco_2023_supplement_ndc_raw_filename <- config[["geco_2023_supplement_ndc_raw_f
 geco_2023_supplement_ref_raw_filename <- config[["geco_2023_supplement_ref_raw_filename"]]
 
 
-logger::log_info("Setting GECO 2023 paths.")
+logger::log_info("GECO 2023: Setting GECO 2023 paths.")
 
 geco_2023_raw_full_path <-
   file.path(
@@ -61,7 +61,7 @@ geco_2023_supplement_ref_raw_filepath <-
   )
 
 
-logger::log_info("Checking that GECO 2023 filepaths exist.")
+logger::log_info("GECO 2023: Checking that GECO 2023 filepaths exist.")
 
 stopifnot(fs::file_exists(geco_2023_15c_raw_filepath))
 stopifnot(fs::file_exists(geco_2023_ndc_raw_filepath))
@@ -71,7 +71,7 @@ stopifnot(fs::file_exists(geco_2023_supplement_ndc_raw_filepath))
 stopifnot(fs::file_exists(geco_2023_supplement_ref_raw_filepath))
 
 
-logger::log_info("Loading GECO 2023 raw data.")
+logger::log_info("GECO 2023: Loading GECO 2023 raw data.")
 
 geco_2023_aviation_15c_raw <-
   readxl::read_xlsx(
@@ -182,7 +182,7 @@ geco_2023_supplement_ref_raw <-
   )
 
 
-logger::log_info("Processing GECO 2023 data.")
+logger::log_info("GECO 2023: Processing GECO 2023 data.")
 
 geco_2023 <- pacta.scenario.data.preparation::prepare_geco_2023_scenario(
   geco_2023_aviation_15c_raw,
@@ -203,10 +203,15 @@ geco_2023 <- pacta.scenario.data.preparation::prepare_geco_2023_scenario(
 )
 
 if (pacta.data.validation::validate_intermediate_scenario_output(geco_2023)) {
-  logger::log_info("GECO 2023 data is valid.")
+  logger::log_info("GECO 2023: GECO 2023 data is valid.")
+
+  output_path <- fs::path(scenario_preparation_outputs_path, "geco_2023.csv")
+  
   readr::write_csv(
-    geco_2023,
-    fs::path(scenario_preparation_outputs_path, "geco_2023.csv")
+    x = geco_2023,
+    file = output_path
+
+    logger::log_info("GECO 2023: GECO 2023 data saved to {output_path}.")
   )
 } else {
   logger::log_error("GECO 2023 data is not valid.")
