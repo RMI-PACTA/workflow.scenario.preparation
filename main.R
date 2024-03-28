@@ -41,10 +41,16 @@ config <- config::get(
   use_parent = FALSE
 )
 
-logger::log_info("Setting general config.")
+logger::log_info("Determining scenarios to include.")
 
 scenarios_to_include <- config$inherits
+
+logger::log_info("Scenarios to be included: {scenarios_to_include}")
+
+logger::log_info("Processing scenarios.")
 
 for (scenario in scenarios_to_include) {
   source(paste0("process_scenario_", scenario, ".R"))
 }
+
+logger::log_info("Finished processing scenarios.")
