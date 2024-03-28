@@ -1,4 +1,5 @@
-default: "default" # default config must have at least one key-value
+default:
+  default: "default" # default config must have at least one key-value
 
 geco_2022:
   geco_2022_path: "geco_2022"
