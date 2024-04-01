@@ -2,6 +2,7 @@ logger::log_info("ISF 2023: Setting ISF 2023 config.")
 
 isf_2023_raw_path <- config[["isf_2023_raw_path"]]
 isf_2023_scope_global_raw_filepath <- config[["isf_2023_scope_global_raw_filepath"]]
+isf_2023_s_global_raw_filepath <- config[["isf_2023_s_global_raw_filepath"]]
 isf_2023_country_annex_path <- config[["isf_2023_country_annex_path"]]
 
 logger::log_info("ISF 2023: Setting ISF 2023 paths.")
@@ -18,6 +19,12 @@ isf_2023_scope_global_raw_full_filepath <-
     isf_2023_scope_global_raw_filepath
   )
 
+isf_2023_s_global_raw_full_filepath <-
+  file.path(
+    isf_2023_raw_full_path,
+    isf_2023_s_global_raw_filepath
+  )
+
 isf_2023_country_annex_full_path <-
   file.path(
     isf_2023_raw_full_path,
@@ -30,6 +37,7 @@ isf_2023_annex_countries_filepaths <-
 logger::log_info("ISF 2023: Checking that ISF 2023 filepaths exist.")
 
 stopifnot(fs::file_exists(isf_2023_scope_global_raw_full_filepath))
+stopifnot(fs::file_exists(isf_2023_s_global_raw_full_filepath))
 stopifnot(length(isf_2023_annex_countries_filepaths) > 0)
 
 logger::log_info("ISF 2023: Loading ISF 2023 raw data.")
@@ -47,6 +55,12 @@ isf_2023_scope_global_raw <-
     sheets = "Scope_Global"
   )
 
+isf_2023_s_global_raw <-
+  read_xlsx_and_formats(
+    path = isf_2023_s_global_raw_full_filepath,
+    sheets = "S_Global"
+  )
+
 isf_2023_annex_countries_raw <-
   purrr::map(isf_2023_annex_countries_filepaths, read_xlsx_and_formats)
 
@@ -54,6 +68,7 @@ logger::log_info("ISF 2023: Processing ISF 2023 data.")
 
 isf_2023 <- pacta.scenario.data.preparation::prepare_isf_2023_scenario(
   isf_2023_scope_global_raw,
+  isf_2023_s_global_raw,
   isf_2023_annex_countries_raw
 )
 
