@@ -66,11 +66,12 @@ isf_2023_annex_countries_raw <-
 
 logger::log_info("ISF 2023: Processing ISF 2023 data.")
 
-isf_2023 <- pacta.scenario.data.preparation::prepare_isf_2023_scenario(
-  isf_2023_scope_global_raw,
-  isf_2023_s_global_raw,
-  isf_2023_annex_countries_raw
-)
+isf_2023 <-
+  pacta.scenario.data.preparation::prepare_isf_2023_scenario(
+    isf_2023_scope_global_raw,
+    isf_2023_s_global_raw,
+    isf_2023_annex_countries_raw
+  )
 
 if (pacta.data.validation::validate_intermediate_scenario_output(isf_2023)) {
   logger::log_info("ISF 2023: ISF 2023 data is valid.")
