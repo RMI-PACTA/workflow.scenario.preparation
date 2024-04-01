@@ -23,8 +23,18 @@ geco_2023:
   geco_2023_supplement_ndc_raw_filename: "GECO2023_20231219_NDC_Total.xlsx"
   geco_2023_supplement_ref_raw_filename: "GECO2023_20231219_Ref_Total.xlsx"
 
+weo_2022:
+  weo_2022_raw_path: "weo_2022/WEO2022 extended data"
+  weo_2022_ext_data_regions_raw_filepath: "raw_data_from_provider/used_in_pacta.scenario_preparation/WEO2022_Extended_Data_Regions.csv"
+  weo_2022_ext_data_world_raw_filepath: "raw_data_from_provider/used_in_pacta.scenario_preparation/WEO2022_Extended_Data_World.csv"
+  weo_2022_fossil_fuels_raw_filepath: "light_process/weo2022_fossilfuel_demand_supply.csv"
+  weo_2022_nze_auto_raw_filepath: "processed_data/nze_may_2021_report_old_data/hard_process_auto/used/NZE2021_RawData_2050.xlsx"
+  weo_2022_nze_steel_raw_filepath: "raw_data_from_provider/used_in_pacta.scenario_preparation/WEO2022_NZE_SteelData.csv"
+  weo_2022_sales_aps_auto_raw_filepath: "raw_data_from_provider/used_in_pacta.scenario_preparation/SalesAPS_rawdata.csv"
+  weo_2022_electric_sales_aps_auto_raw_filename: "raw_data_from_provider/used_in_pacta.scenario_preparation/IEA-EV-dataEV salesCarsProjection-APS.csv"
+
 2022Q4:
-  inherits: geco_2022
+  inherits: [geco_2022, weo_2022]
 
 2023Q4:
   inherits: geco_2023
