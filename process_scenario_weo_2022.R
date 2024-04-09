@@ -80,38 +80,43 @@ read_xlsx_and_formats <- function(path, ...) {
 
 weo_2022_ext_data_regions_raw <-
   readr::read_csv(
-    file = weo_2022_ext_data_regions_raw_full_filepath
+    file = weo_2022_ext_data_regions_raw_full_filepath,
+    show_col_types = FALSE
   )
 
 weo_2022_ext_data_world_raw <-
   readr::read_csv(
-    file = weo_2022_ext_data_world_raw_full_filepath
+    file = weo_2022_ext_data_world_raw_full_filepath,
+    show_col_types = FALSE
   )
 
 weo_2022_fossil_fuels_raw <-
   readr::read_csv(
-    file = weo_2022_fossil_fuels_raw_full_filepath
+    file = weo_2022_fossil_fuels_raw_full_filepath,
+    show_col_types = FALSE
   )
 
 weo_2022_nze_auto_raw <-
   read_xlsx_and_formats(
-    path = weo_2022_nze_auto_raw_full_filepath,
-    sheets = ""
+    path = weo_2022_nze_auto_raw_full_filepath
   )
 
 weo_2022_nze_steel_raw <-
   readr::read_csv(
-    file = weo_2022_nze_steel_raw_full_filepath
+    file = weo_2022_nze_steel_raw_full_filepath,
+    show_col_types = FALSE
   )
 
 weo_2022_sales_aps_auto_raw <-
   readr::read_csv(
-    file = weo_2022_sales_aps_auto_raw_full_filepath
+    file = weo_2022_sales_aps_auto_raw_full_filepath,
+    show_col_types = FALSE
   )
 
 weo_2022_electric_sales_aps_auto_raw <-
   readr::read_csv(
-    file = weo_2022_electric_sales_aps_auto_raw_full_filename
+    file = weo_2022_electric_sales_aps_auto_raw_full_filename,
+    show_col_types = FALSE
   )
 
 logger::log_info("WEO 2022: Processing WEO 2022 data.")
