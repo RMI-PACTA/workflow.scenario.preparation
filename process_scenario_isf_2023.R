@@ -51,14 +51,12 @@ read_xlsx_and_formats <- function(path, ...) {
 
 isf_2023_scope_global_raw <-
   read_xlsx_and_formats(
-    path = isf_2023_scope_global_raw_full_filepath,
-    sheets = "Scope_Global"
+    path = isf_2023_scope_global_raw_full_filepath
   )
 
 isf_2023_s_global_raw <-
   read_xlsx_and_formats(
-    path = isf_2023_s_global_raw_full_filepath,
-    sheets = "S_Global"
+    path = isf_2023_s_global_raw_full_filepath
   )
 
 isf_2023_annex_countries_raw <-
