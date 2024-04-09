@@ -78,29 +78,30 @@ read_xlsx_and_formats <- function(path, ...) {
 
 weo_2023_ext_data_regions_raw <-
   readr::read_csv(
-    file = weo_2023_ext_data_regions_raw_full_filepath
+    file = weo_2023_ext_data_regions_raw_full_filepath,
+    show_col_types = FALSE
   )
 
 weo_2023_ext_data_world_raw <-
   readr::read_csv(
-    file = weo_2023_ext_data_world_raw_full_filepath
+    file = weo_2023_ext_data_world_raw_full_filepath,
+    show_col_types = FALSE
   )
 
 weo_2023_fig_chptr_3_raw <-
   read_xlsx_and_formats(
-    path = weo_2023_fig_chptr_3_raw_full_filepath,
-    sheets = ""
+    path = weo_2023_fig_chptr_3_raw_full_filepath
   )
 
 iea_global_ev_raw <-
   readr::read_csv(
-    file = iea_global_ev_raw_full_filepath
+    file = iea_global_ev_raw_full_filepath,
+    show_col_types = FALSE
   )
 
 mpp_ats_raw <-
   read_xlsx_and_formats(
-    path = mpp_ats_raw_full_filepath,
-    sheets = ""
+    path = mpp_ats_raw_full_filepath
   )
 
 logger::log_info("WEO 2023: Processing WEO 2023 data.")
