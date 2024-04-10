@@ -28,8 +28,14 @@ isf_2021:
   isf_2021_power_raw_filename: "NZAOA_raw_data_power.xlsx"
   isf_2021_not_power_raw_filename: "NZAOA_rawdata_notpower_P4I.xlsx"
 
+isf_2023:
+  isf_2023_raw_path: "isf_2023-20240222"
+  isf_2023_scope_global_raw_filepath: "doi_10_5061_dryad_cz8w9gj82__v20230901/4.7 Database_August_upload/Scope_Country/Scope_Global.xlsx"
+  isf_2023_s_global_raw_filepath: "doi_10_5061_dryad_cz8w9gj82__v20230901/4.7 Database_August_upload/S_Country/S_Global.xlsx"
+  isf_2023_country_annex_path: "doi_10_5061_dryad_cz8w9gj82__v20230901/4.7 Database_August_upload/Annex_Country"
+
 2022Q4:
   inherits: [geco_2022, isf_2021]
 
 2023Q4:
-  inherits: geco_2023
+  inherits: [geco_2023, isf_2023]
