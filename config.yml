@@ -23,8 +23,14 @@ geco_2023:
   geco_2023_supplement_ndc_raw_filename: "GECO2023_20231219_NDC_Total.xlsx"
   geco_2023_supplement_ref_raw_filename: "GECO2023_20231219_Ref_Total.xlsx"
 
+isf_2023:
+  isf_2023_raw_path: "isf_2023-20240222"
+  isf_2023_scope_global_raw_filepath: "doi_10_5061_dryad_cz8w9gj82__v20230901/4.7 Database_August_upload/Scope_Country/Scope_Global.xlsx"
+  isf_2023_s_global_raw_filepath: "doi_10_5061_dryad_cz8w9gj82__v20230901/4.7 Database_August_upload/S_Country/S_Global.xlsx"
+  isf_2023_country_annex_path: "doi_10_5061_dryad_cz8w9gj82__v20230901/4.7 Database_August_upload/Annex_Country"
+
 2022Q4:
   inherits: geco_2022
 
 2023Q4:
-  inherits: geco_2023
+  inherits: [geco_2023, isf_2023]
