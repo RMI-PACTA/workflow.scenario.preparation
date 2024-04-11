@@ -40,14 +40,12 @@ read_xlsx_and_formats <- function(path, ...) {
 
 isf_2021_power_raw <-
   read_xlsx_and_formats(
-    path = isf_2021_power_raw_full_filepath,
-    sheets = "Sheet2"
+    path = isf_2021_power_raw_full_filepath
   )
 
 isf_2021_not_power_raw <-
   read_xlsx_and_formats(
-    path = isf_2021_not_power_raw_full_filepath,
-    sheets = "NZAOA_rawdata_notpower"
+    path = isf_2021_not_power_raw_full_filepath
   )
 
 logger::log_info("ISF 2021: Processing ISF 2021 data.")
