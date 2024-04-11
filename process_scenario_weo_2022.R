@@ -71,13 +71,6 @@ stopifnot(fs::file_exists(weo_2022_electric_sales_aps_auto_raw_full_filename))
 
 logger::log_info("WEO 2022: Loading WEO 2022 raw data.")
 
-read_xlsx_and_formats <- function(path, ...) {
-  cells <- tidyxl::xlsx_cells(path, ...)
-  formats <- tidyxl::xlsx_formats(path)
-  attr(cells, "formats") <- formats
-  cells
-}
-
 weo_2022_ext_data_regions_raw <-
   readr::read_csv(
     file = weo_2022_ext_data_regions_raw_full_filepath,
@@ -97,7 +90,7 @@ weo_2022_fossil_fuels_raw <-
   )
 
 weo_2022_nze_auto_raw <-
-  read_xlsx_and_formats(
+  tidyxl::xlsx_cells(
     path = weo_2022_nze_auto_raw_full_filepath
   )
 
