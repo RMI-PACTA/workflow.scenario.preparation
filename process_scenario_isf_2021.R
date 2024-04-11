@@ -31,20 +31,13 @@ stopifnot(fs::file_exists(isf_2021_not_power_raw_full_filepath))
 
 logger::log_info("ISF 2021: Loading ISF 2021 raw data.")
 
-read_xlsx_and_formats <- function(path, ...) {
-  cells <- tidyxl::xlsx_cells(path, ...)
-  formats <- tidyxl::xlsx_formats(path)
-  attr(cells, "formats") <- formats
-  cells
-}
-
 isf_2021_power_raw <-
-  read_xlsx_and_formats(
+  tidyxl::xlsx_cells(
     path = isf_2021_power_raw_full_filepath
   )
 
 isf_2021_not_power_raw <-
-  read_xlsx_and_formats(
+  tidyxl::xlsx_cells(
     path = isf_2021_not_power_raw_full_filepath
   )
 
