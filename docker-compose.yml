@@ -1,7 +1,8 @@
-version: "3.2"
+version: "3.8"
 
 services:
   scenario_prep:
+    platform: linux/amd64
     build:
       context: .
     environment:
