@@ -261,13 +261,7 @@ geco_2022 <- pacta.scenario.data.preparation::prepare_geco_2022_scenario(
 
 # check output data ------------------------------------------------------------
 
-comparison <- waldo::compare(
-  pacta.scenario.preparation::geco_2022,
-  geco_2022,
-  tolerance = 1e-15
-)
-
-if (length(comparison) == 0) {
+if (pacta.data.validation::validate_intermediate_scenario_output(geco_2022)) {
   logger::log_info("GECO 2022: GECO 2022 data is valid.")
 
   output_path <- fs::path(scenario_preparation_outputs_path, "geco_2022.csv")
