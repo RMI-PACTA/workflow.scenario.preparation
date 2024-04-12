@@ -1,0 +1,38 @@
+---
+# This example file will enable docker-related checks on push or PR to the main
+# branch.
+# It will also run the checks every weeknight at midnight UTC
+#
+# Note the @main in `uses:` on the last line. This will call the latest version
+# of the workflow from the `main` brnach in the RMI-PACTA/actions repo. You can
+# also specify a tag from that repo, or a commit SHA to pin action versions.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 0 * * 1,2,3,4,5'
+  workflow_dispatch:
+
+name: docker
+
+jobs:
+  docker:
+    name: Docker actions
+    uses: RMI-PACTA/actions/.github/workflows/docker.yml@main
+    with:
+      do-build-and-push: false
+
+  build-docker-image:
+    # if: ${{ inputs.do-build-and-push }}
+    uses: ./.github/workflows/docker-build-multiarch.yml
+    secrets: inherit
+    with:
+      image-name: ${{ github.repository }}
+
+  add-comment:
+    if: ${{ github.event_name == 'pull_request' }}
+    uses: RMI-PACTA/actions/.github/workflows/add-comment-history.yml@main
+    needs: [build-docker-image]
+    with:
+      header: "Docker build status"
