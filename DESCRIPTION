@@ -36,7 +36,9 @@ Imports:
     pacta.scenario.data.preparation (>= 0.0.0.9000),
     purrr,
     readr,
-    tidyxl
+    readxl,
+    tidyxl,
+    waldo
 Remotes:  
     RMI-PACTA/pacta.data.validation,
     RMI-PACTA/pacta.scenario.data.preparation
