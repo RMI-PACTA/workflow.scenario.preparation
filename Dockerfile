@@ -48,7 +48,7 @@ RUN Rscript -e "\
   pak::pak(pkg_deps); \
   "
 COPY config.yml /app/config.yml
-COPY main.R /app/main.R
+COPY *.R /app/
 
 CMD ["Rscript", "/app/main.R"]
 
