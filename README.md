@@ -72,3 +72,10 @@ source("main.R")
 ```
 
 Alternatively, you can step through the script line-by-line for debugging.
+
+Alternatively, you can read in the `.env` file (specified above for the Docker process) and run the process with:
+
+```r
+readRenviron(".env"); source("main.R")
+```
+⚠️ When opening a built-in Terminal pane in RStudio, RStudio copies in any environment variables that were available when RStudio starts. That can have the effect of overwriting/ignoring the environment variables in the `.env` file if you try to build/run the Docker container from there.
