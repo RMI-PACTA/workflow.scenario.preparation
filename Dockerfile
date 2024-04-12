@@ -1,9 +1,8 @@
 # using rocker r-vers as a base with R 4.3.1
 # https://hub.docker.com/r/rocker/r-ver
 # https://rocker-project.org/images/versioned/r-ver.html
-ARG PLATFORM="linux/amd64"
 ARG R_VERS="4.3.1"
-FROM --platform=$PLATFORM rocker/r-ver:$R_VERS AS base
+FROM --platform="linux/amd64" rocker/r-ver:$R_VERS AS base
 
 # set Docker image labels
 LABEL org.opencontainers.image.source=https://github.com/RMI-PACTA/workflow.scenario.preparation
