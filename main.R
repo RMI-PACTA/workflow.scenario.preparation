@@ -41,6 +41,35 @@ config <- config::get(
   use_parent = FALSE
 )
 
+
+# create timestamped output directory ------------------------------------------
+
+system_timestamp <-
+  format(
+    Sys.time(),
+    format = "%Y%m%d_T%H%M%SZ",
+    tz = "UTC"
+  )
+
+scenario_preparation_outputs_path <-
+  file.path(
+    scenario_preparation_outputs_path,
+    paste0(config_name, "_", system_timestamp)
+  )
+
+if (dir.exists(scenario_preparation_outputs_path)) {
+  logger::log_warn("POTENTIAL DATA LOSS: Output directory already exists, and files may be overwritten ({scenario_preparation_outputs_path}).")
+  warning("Output directory exists. Files may be overwritten.")
+} else {
+  logger::log_trace("Creating output directory: \"{scenario_preparation_outputs_path}\"")
+  dir.create(scenario_preparation_outputs_path, recursive = TRUE)
+}
+
+logger::log_info("Files will be saved in directory: \"{scenario_preparation_outputs_path}\"")
+
+
+# building scenarios -----------------------------------------------------------
+
 logger::log_info("Determining scenarios to include.")
 
 scenarios_to_include <- config$inherits
