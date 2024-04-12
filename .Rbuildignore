@@ -1,3 +1,11 @@
 ^LICENSE\.md$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^Dockerfile$
+^config\.yml$
+^docker-compose\.yml$
+^example\.env$
+^\.github$
+^\.env$
+^outputs$
+^.*\.R$
