@@ -11,12 +11,6 @@ Welcome to `workflow.scenario.preparation`! This tool is designed to streamline 
 
 Ensure the following files exist in your input directory (default `./inputs`):
 
-### General files
-
-These files are essential for preparing all scenarios:
-
-- `technology_bridge.csv`
-
 ### GECO 2022
 
 For GECO 2022, prepare the following files (TODO: Enhance this section):
