@@ -22,3 +22,11 @@ jobs:
     uses: RMI-PACTA/actions/.github/workflows/docker.yml@main
     with:
       do-build-and-push: false
+
+  build-docker-image:
+    # if: ${{ inputs.do-build-and-push }}
+    uses: ./.github/workflows/docker-build-multiarch.yml
+    secrets: inherit
+    with:
+      image-name: ${{ github.repository }}
+
