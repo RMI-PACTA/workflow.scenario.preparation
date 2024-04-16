@@ -4,8 +4,9 @@
 
   "parameters": {
 
-    "containerGroupName": {
+    "containerGroupPrefix": {
       "type": "string",
+      "defaultValue": "workflow.scenario.preparation",
       "metadata": {
         "description": "The name of the container group."
       }
@@ -104,8 +105,12 @@
 
     "rConfigActive": {
       "type": "string",
+      "allowedValues": [
+        "2022Q4",
+        "2023Q4"
+      ],
       "metadata": {
-        "description": "Active configureion from config.yml"
+        "description": "Active configuration from config.yml"
       }
     }
     
@@ -119,7 +124,8 @@
     "machineMemoryInGBLimit": 4,
     "machineMemoryInGBRequest": 4,
     "mountPathSources": "/mnt/scenario-sources",
-    "mountPathOutputs": "/mnt/workflow-scenario-preparation-outputs"
+    "mountPathOutputs": "/mnt/workflow-scenario-preparation-outputs",
+    "containerGroupName": "[concat(parameters('containerGroupPrefix'), '-', parameters('rConfigActive'))]"
 
   },
 
@@ -130,7 +136,7 @@
     {
       "type": "Microsoft.ContainerInstance/containerGroups",
       "apiVersion": "2021-09-01",
-      "name": "[parameters('containerGroupName')]",
+      "name": "[variables('containerGroupName')]",
       "location": "[parameters('location')]",
       "identity": {
         "type": "UserAssigned",
