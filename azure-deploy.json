@@ -179,7 +179,7 @@
               },
               {
                 "name": "LOG_LEVEL",
-                "value": "DEBUG"
+                "value": "TRACE"
               },
               {
                 "name": "SCENARIO_PREPARATION_INPUTS_PATH",
@@ -214,7 +214,7 @@
             "name": "scenario-sources",
             "azureFile": {
               "shareName": "[parameters('storageAccountShareSources')]",
-              "readOnly": false,
+              "readOnly": true,
               "storageAccountName": "[parameters('storageAccountNameSources')]",
               "storageAccountKey": "[parameters('storageAccountKeySources')]"
             }
