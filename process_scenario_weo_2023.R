@@ -69,13 +69,6 @@ stopifnot(fs::file_exists(mpp_ats_raw_full_filepath))
 
 logger::log_info("WEO 2023: Loading WEO 2023 raw data.")
 
-read_xlsx_and_formats <- function(path, ...) {
-  cells <- tidyxl::xlsx_cells(path, ...)
-  formats <- tidyxl::xlsx_formats(path)
-  attr(cells, "formats") <- formats
-  cells
-}
-
 weo_2023_ext_data_regions_raw <-
   readr::read_csv(
     file = weo_2023_ext_data_regions_raw_full_filepath,
@@ -89,7 +82,7 @@ weo_2023_ext_data_world_raw <-
   )
 
 weo_2023_fig_chptr_3_raw <-
-  read_xlsx_and_formats(
+  tidyxl::xlsx_cells(
     path = weo_2023_fig_chptr_3_raw_full_filepath
   )
 
@@ -100,7 +93,7 @@ iea_global_ev_raw <-
   )
 
 mpp_ats_raw <-
-  read_xlsx_and_formats(
+  tidyxl::xlsx_cells(
     path = mpp_ats_raw_full_filepath
   )
 
