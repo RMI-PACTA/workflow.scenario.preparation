@@ -118,5 +118,7 @@ To prepare the Azure landscape:
 2. Manually start a container group with `azure-deploy.json` as documented above
 3. Grant `Contributor` role on the new Container Group to the Managed Identity
 4. Grant `Managed Application Contributor Role` Role to the Managed Identity for the Resource Group in which the Container Group will run
+5. Ensure the Managed identity [has deploy permissions](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/key-vault-parameter?tabs=azure-cli#grant-deployment-access-to-the-secrets) to the key vault (if needed)
+6. Ensure the Managed Identity has the `Managed Identity Operator` Role for the managed idenity used by the container group (specified with the `identity` parameter in the deploy template).
 
 See the [Microsoft documentation](https://learn.microsoft.com/en-us/azure/container-instances/container-instances-github-action?tabs=userlevel) for more information on setting up GH Actions.
