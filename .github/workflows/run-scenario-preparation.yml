@@ -52,13 +52,14 @@ jobs:
       - name: Start Container Instance
         uses: azure/CLI@v2
         env:
-          IMAGE_TAG: ${{ inputs.image-tag }}
+          FULL_IMAGE_NAME: ${{ inputs.image-tag }}
           R_CONFIG_ACTIVE: ${{ matrix.config_active }}
           RESOURCEGROUP: ${{ inputs.resource-group }}
         with:
           # azcliversion: 2.30.0
           inlineScript: |
             az --version
+            IMAGE_TAG=$(echo $FULL_IMAGE_NAME | sed 's/^.*://')
             az deployment group create \
               --name "workflow.scenario.preparation-$R_CONFIG_ACTIVE" \
               --resource-group "$RESOURCEGROUP" \
