@@ -38,5 +38,5 @@ jobs:
       header: "Docker build status"
 
   run-scenario-prep:
-    uses: ./.github/workflows/docker-build-multiarch.yml
+    uses: ./.github/workflows/run-scenario-preparation.yml
     needs: [build-docker-image]
