@@ -6,6 +6,12 @@ name: Run scenario preparation
 
 on:
   workflow_call:
+    inputs:
+      resource-group:
+        description: Resource Group to deploy container
+        required: false
+        default: RMI-SP-PACTA-PROD
+        type: string
 
 jobs:
   prep:
@@ -39,10 +45,11 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       # https://github.com/marketplace/actions/azure-cli-action#workflow-to-execute-an-azure-cli-script-of-a-specific-cli-version
-      - name: Download pacta-data
+      - name: Start Container Instance
         uses: azure/CLI@v2
         env:
           R_CONFIG_ACTIVE: ${{ matrix.config_active }}
+          RESOURCEGROUP: ${{ inputs.resource-group }}
         with:
           # azcliversion: 2.30.0
           inlineScript: |
