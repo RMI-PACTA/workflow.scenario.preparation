@@ -9,7 +9,7 @@ on:
 
 jobs:
   prep:
-    name: Run Scenario Preparation
+    name: Run workflow
     runs-on: ubuntu-latest
     strategy:
       # fail if any build fails
@@ -23,6 +23,7 @@ jobs:
     permissions:
       packages: read
       contents: read
+      id-token: write
 
     steps:
 
