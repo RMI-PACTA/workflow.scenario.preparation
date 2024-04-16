@@ -78,4 +78,34 @@ Alternatively, you can read in the `.env` file (specified above for the Docker p
 ```r
 readRenviron(".env"); source("main.R")
 ```
+
 ⚠️ When opening a built-in Terminal pane in RStudio, RStudio copies in any environment variables that were available when RStudio starts. That can have the effect of overwriting/ignoring the environment variables in the `.env` file if you try to build/run the Docker container from there.
+
+## Running on Azure Container Instances
+
+A parameter file with the values that the RMI-PACTA team uses for extracting data is available at [`azure-deploy.rmi-pacta.parameters.json`](azure-deploy.rmi-pacta.parameters.json).
+
+```sh
+# run from repo root
+
+# change this value as needed.
+RESOURCEGROUP="RMI-SP-PACTA-DEV"
+
+# Users with access to the RMI-PACTA Azure subscription can run:
+az deployment group create --resource-group "$RESOURCEGROUP" --template-file azure-deploy.json --parameters azure-deploy.rmi-pacta.parameters.json
+
+```
+
+For security, the RMI-PACTA parameters file makes heavy use of extracting secrets from an Azure Key vault, but an example file that passes parameters "in the clear" is available as [`azure-deploy.example.parameters.json`](azure-deploy.example.parameters.json)
+
+Non RMI-PACTA users can define their own parameters and invoke the ARM Template with:
+
+```sh
+# Otherwise:
+# Prompts for parameters without defaults
+az deployment group create --resource-group "$RESOURCEGROUP" --template-file azure-deploy.json 
+
+# if you have created your own parameters file:
+az deployment group create --resource-group "$RESOURCEGROUP" --template-file azure-deploy.json --parameters @azure-deploy.parameters.json
+```
+
