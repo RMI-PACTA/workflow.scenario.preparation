@@ -116,6 +116,6 @@ To prepare the Azure landscape:
 
 1. Create a User Assigned Managed identity for the repo as described [here](https://github.com/marketplace/actions/azure-login#login-with-openid-connect-oidc-recommended)
 2. Manually start a container group with `azure-deploy.json` as documented above
-3. Grant `Contributor` role on the new Container Group to the Masnaged Identity
+3. Grant `Contributor` role on the new Container Group to the Managed Identity
 
 See the [Microsoft documentation](https://learn.microsoft.com/en-us/azure/container-instances/container-instances-github-action?tabs=userlevel) for more information on setting up GH Actions.
