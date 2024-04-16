@@ -7,6 +7,10 @@ name: Run scenario preparation
 on:
   workflow_call:
     inputs:
+      image-tag:
+        description: Tag for docker image
+        required: true
+        type: string
       resource-group:
         description: Resource Group to deploy container
         required: false
@@ -48,6 +52,7 @@ jobs:
       - name: Start Container Instance
         uses: azure/CLI@v2
         env:
+          IMAGE_TAG: ${{ inputs.image-tag }}
           R_CONFIG_ACTIVE: ${{ matrix.config_active }}
           RESOURCEGROUP: ${{ inputs.resource-group }}
         with:
@@ -59,5 +64,5 @@ jobs:
               --resource-group "$RESOURCEGROUP" \
               --template-file azure-deploy.json \
               --parameters azure-deploy.rmi-pacta.parameters.json \
-              --parameters imageTag=pr-40 \
+              --parameters imageTag="$IMAGE_TAG" \
               --parameters rConfigActive="$R_CONFIG_ACTIVE"
