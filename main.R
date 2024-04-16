@@ -47,7 +47,7 @@ config <- config::get(
 system_timestamp <-
   format(
     Sys.time(),
-    format = "%Y%m%d_T%H%M%SZ",
+    format = "%Y%m%dT%H%M%SZ",
     tz = "UTC"
   )
 
