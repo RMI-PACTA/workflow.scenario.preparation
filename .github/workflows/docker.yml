@@ -42,4 +42,4 @@ jobs:
     needs: [build-docker-image]
     secrets: inherit
     with:
-      image-tag: ${{ jobs.build-docker-image.outputs.full-image-name }}
+      image-tag: ${{ needs.build-docker-image.outputs.full-image-name }}
