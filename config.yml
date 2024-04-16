@@ -2,7 +2,7 @@ default:
   default: "default" # default config must have at least one key-value
 
 geco_2022:
-  geco_2022_path: "geco_2022"
+  geco_2022_path: "00Imported/geco_2022"
   geco_2022_automotive_filename: "geco2022_automotive_stocks_geco2021_retirement_rates_CORRECTED.csv"
   geco_2022_aviation_filename: "GECO2022_Aviation_processed_data.csv"
   geco_2022_fossil_fuels_15c_filename: "geco2022_15c_ff_rawdata.csv"
@@ -24,7 +24,7 @@ geco_2023:
   geco_2023_supplement_ref_raw_filename: "GECO2023_20231219_Ref_Total.xlsx"
 
 isf_2021:
-  isf_2021_raw_path: "ISF2021"
+  isf_2021_raw_path: "00Imported/ISF2021"
   isf_2021_power_raw_filename: "NZAOA_raw_data_power.xlsx"
   isf_2021_not_power_raw_filename: "NZAOA_rawdata_notpower_P4I.xlsx"
 
@@ -35,7 +35,7 @@ isf_2023:
   isf_2023_country_annex_path: "doi_10_5061_dryad_cz8w9gj82__v20230901/4.7 Database_August_upload/Annex_Country"
 
 weo_2022:
-  weo_2022_raw_path: "weo_2022/WEO2022 extended data"
+  weo_2022_raw_path: "00Imported/WEO2022 extended data"
   weo_2022_ext_data_regions_raw_filepath: "raw_data_from_provider/used_in_pacta.scenario_preparation/WEO2022_Extended_Data_Regions.csv"
   weo_2022_ext_data_world_raw_filepath: "raw_data_from_provider/used_in_pacta.scenario_preparation/WEO2022_Extended_Data_World.csv"
   weo_2022_fossil_fuels_raw_filepath: "light_process/weo2022_fossilfuel_demand_supply.csv"
