@@ -55,6 +55,7 @@ jobs:
           inlineScript: |
             az --version
             az deployment group create \
+              --name "workflow.scenario.preparation-$R_CONFIG_ACTIVE" \
               --resource-group "$RESOURCEGROUP" \
               --template-file azure-deploy.json \
               --parameters azure-deploy.rmi-pacta.parameters.json \
