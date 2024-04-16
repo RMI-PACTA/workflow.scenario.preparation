@@ -27,6 +27,9 @@ jobs:
 
     steps:
 
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       # https://github.com/Azure/login?tab=readme-ov-file#login-with-openid-connect-oidc-recommended
       - name: Azure Login
         uses: azure/login@v2
@@ -38,7 +41,15 @@ jobs:
       # https://github.com/marketplace/actions/azure-cli-action#workflow-to-execute-an-azure-cli-script-of-a-specific-cli-version
       - name: Download pacta-data
         uses: azure/CLI@v2
+        env:
+          R_CONFIG_ACTIVE: ${{ matrix.config_active }}
         with:
           # azcliversion: 2.30.0
           inlineScript: |
             az --version
+            az deployment group create \
+              --resource-group "$RESOURCEGROUP" \
+              --template-file azure-deploy.json \
+              --parameters azure-deploy.rmi-pacta.parameters.json \
+              --parameters imageTag=pr-40 \
+              --parameters rConfigActive="$R_CONFIG_ACTIVE"
