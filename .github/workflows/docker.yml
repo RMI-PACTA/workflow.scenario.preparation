@@ -28,7 +28,7 @@ jobs:
 
   run-scenario-prep:
     uses: ./.github/workflows/run-scenario-preparation.yml
-    needs: [build-docker-image]
+    needs: [docker]
     secrets: inherit
     with:
       image-tag: ${{ needs.docker.outputs.full-image-name }}
