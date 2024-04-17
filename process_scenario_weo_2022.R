@@ -106,10 +106,10 @@ weo_2022_sales_aps_auto_raw <-
     show_col_types = FALSE
   )
 
-weo_2022_electric_sales_aps_auto_raw <-
-  readr::read_csv(
-    file = weo_2022_electric_sales_aps_auto_raw_full_filename,
-    show_col_types = FALSE
+weo_2022_electric_sales_aps_auto_raw_text <-
+  readLines(
+    con = weo_2022_electric_sales_aps_auto_raw_full_filename,
+    warn = FALSE
   )
 
 logger::log_info("WEO 2022: Processing WEO 2022 data.")
@@ -122,7 +122,7 @@ weo_2022 <-
     weo_2022_nze_auto_raw,
     weo_2022_nze_steel_raw,
     weo_2022_sales_aps_auto_raw,
-    weo_2022_electric_sales_aps_auto_raw
+    weo_2022_electric_sales_aps_auto_raw_text
   )
 
 if (pacta.data.validation::validate_intermediate_scenario_output(weo_2022)) {
