@@ -24,6 +24,9 @@ ARG DEBCONF_NOWARNINGS="yes"
 
 # install system dependencies
 RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    libicu-dev=70.1-* \
+    libxml2-dev=2.9.* \
   && rm -rf /var/lib/apt/lists/*
 
 # sets CRAN repo to use Posit Package Manager to freeze R package versions to
