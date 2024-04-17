@@ -78,4 +78,47 @@ Alternatively, you can read in the `.env` file (specified above for the Docker p
 ```r
 readRenviron(".env"); source("main.R")
 ```
+
 ⚠️ When opening a built-in Terminal pane in RStudio, RStudio copies in any environment variables that were available when RStudio starts. That can have the effect of overwriting/ignoring the environment variables in the `.env` file if you try to build/run the Docker container from there.
+
+## Running on Azure Container Instances
+
+A parameter file with the values that the RMI-PACTA team uses for extracting data is available at [`azure-deploy.rmi-pacta.parameters.json`](azure-deploy.rmi-pacta.parameters.json).
+
+```sh
+# run from repo root
+
+# change this value as needed.
+RESOURCEGROUP="RMI-SP-PACTA-DEV"
+
+# Users with access to the RMI-PACTA Azure subscription can run:
+az deployment group create --resource-group "$RESOURCEGROUP" --template-file azure-deploy.json --parameters azure-deploy.rmi-pacta.parameters.json
+
+```
+
+For security, the RMI-PACTA parameters file makes heavy use of extracting secrets from an Azure Key vault, but an example file that passes parameters "in the clear" is available as [`azure-deploy.example.parameters.json`](azure-deploy.example.parameters.json)
+
+Non RMI-PACTA users can define their own parameters and invoke the ARM Template with:
+
+```sh
+# Otherwise:
+# Prompts for parameters without defaults
+az deployment group create --resource-group "$RESOURCEGROUP" --template-file azure-deploy.json 
+
+# if you have created your own parameters file:
+az deployment group create --resource-group "$RESOURCEGROUP" --template-file azure-deploy.json --parameters @azure-deploy.parameters.json
+```
+
+### Preparing GitHub Actions Runner
+
+The GitHub Actions workflow to run this workflow starts an Azure Container Instance.
+To prepare the Azure landscape:
+
+1. Create a User Assigned Managed identity for the repo as described [here](https://github.com/marketplace/actions/azure-login#login-with-openid-connect-oidc-recommended)
+2. Manually start a container group with `azure-deploy.json` as documented above
+3. Grant `Contributor` role on the new Container Group to the Managed Identity
+4. Grant `Managed Application Contributor Role` Role to the Managed Identity for the Resource Group in which the Container Group will run
+5. Ensure the Managed identity [has deploy permissions](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/key-vault-parameter?tabs=azure-cli#grant-deployment-access-to-the-secrets) to the key vault (if needed)
+6. Ensure the Managed Identity has the `Managed Identity Operator` Role for the managed idenity used by the container group (specified with the `identity` parameter in the deploy template).
+
+See the [Microsoft documentation](https://learn.microsoft.com/en-us/azure/container-instances/container-instances-github-action?tabs=userlevel) for more information on setting up GH Actions.

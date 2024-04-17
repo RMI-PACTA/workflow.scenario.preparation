@@ -36,3 +36,10 @@ jobs:
     needs: [build-docker-image]
     with:
       header: "Docker build status"
+
+  run-scenario-prep:
+    uses: ./.github/workflows/run-scenario-preparation.yml
+    needs: [build-docker-image]
+    secrets: inherit
+    with:
+      image-tag: ${{ needs.build-docker-image.outputs.full-image-name }}
