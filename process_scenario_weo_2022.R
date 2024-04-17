@@ -107,9 +107,11 @@ weo_2022_sales_aps_auto_raw <-
   )
 
 weo_2022_electric_sales_aps_auto_raw <-
-  readr::read_csv(
+  read.table(
     file = weo_2022_electric_sales_aps_auto_raw_full_filename,
-    show_col_types = FALSE
+    header = TRUE,
+    sep = ",",
+    fill = TRUE
   )
 
 logger::log_info("WEO 2022: Processing WEO 2022 data.")
