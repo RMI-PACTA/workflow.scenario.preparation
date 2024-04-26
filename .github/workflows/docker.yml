@@ -21,25 +21,16 @@ jobs:
     name: Docker actions
     uses: RMI-PACTA/actions/.github/workflows/docker.yml@main
     with:
-      do-build-and-push: false
-
-  build-docker-image:
-    # if: ${{ inputs.do-build-and-push }}
-    uses: ./.github/workflows/docker-build-multiarch.yml
-    secrets: inherit
-    with:
-      image-name: ${{ github.repository }}
-
-  add-comment:
-    if: ${{ github.event_name == 'pull_request' }}
-    uses: RMI-PACTA/actions/.github/workflows/add-comment-history.yml@main
-    needs: [build-docker-image]
-    with:
-      header: "Docker build status"
+      build-platform: |
+        [
+          "linux/amd64"
+        ]
+      do-lint: false
+      do-check-r-sysdeps: false
 
   run-scenario-prep:
     uses: ./.github/workflows/run-scenario-preparation.yml
-    needs: [build-docker-image]
+    needs: [docker]
     secrets: inherit
     with:
-      image-tag: ${{ needs.build-docker-image.outputs.full-image-name }}
+      image-tag: ${{ needs.docker.outputs.full-image-name }}
