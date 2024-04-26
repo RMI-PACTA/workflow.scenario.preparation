@@ -25,6 +25,8 @@ jobs:
         [
           "linux/amd64"
         ]
+      do-lint: false
+      do-check-r-sysdeps: false
 
   run-scenario-prep:
     uses: ./.github/workflows/run-scenario-preparation.yml
