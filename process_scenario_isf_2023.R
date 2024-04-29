@@ -85,4 +85,5 @@ if (pacta.data.validation::validate_intermediate_scenario_output(isf_2023)) {
 
 } else {
   logger::log_error("ISF 2023 data is not valid.")
+  stop()
 }

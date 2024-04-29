@@ -275,4 +275,5 @@ if (pacta.data.validation::validate_intermediate_scenario_output(geco_2022)) {
 
 } else {
   logger::log_error("GECO 2022: GECO 2022 data is not valid.")
+  stop()
 }

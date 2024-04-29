@@ -139,4 +139,5 @@ if (pacta.data.validation::validate_intermediate_scenario_output(weo_2022)) {
 
 } else {
   logger::log_error("WEO 2022 data is not valid.")
+  stop()
 }
