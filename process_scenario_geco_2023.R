@@ -206,14 +206,15 @@ if (pacta.data.validation::validate_intermediate_scenario_output(geco_2023)) {
   logger::log_info("GECO 2023: GECO 2023 data is valid.")
 
   output_path <- fs::path(scenario_preparation_outputs_path, "geco_2023.csv")
-  
+
   readr::write_csv(
     x = geco_2023,
     file = output_path
   )
 
   logger::log_info("GECO 2023: GECO 2023 data saved to {output_path}.")
-  
+
 } else {
   logger::log_error("GECO 2023 data is not valid.")
+  stop()
 }
