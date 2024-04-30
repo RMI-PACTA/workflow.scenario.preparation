@@ -63,4 +63,5 @@ if (pacta.data.validation::validate_intermediate_scenario_output(isf_2021)) {
 
 } else {
   logger::log_error("ISF 2021 data is not valid.")
+  stop()
 }

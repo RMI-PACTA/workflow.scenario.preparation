@@ -122,4 +122,5 @@ if (pacta.data.validation::validate_intermediate_scenario_output(weo_2023)) {
 
 } else {
   logger::log_error("WEO 2023 data is not valid.")
+  stop()
 }

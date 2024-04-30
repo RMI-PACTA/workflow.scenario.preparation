@@ -1,8 +1,8 @@
 # workflow.scenario.preparation
 
 <!-- badges: start -->
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) 
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![docker](https://github.com/RMI-PACTA/workflow.scenario.preparation/actions/workflows/docker.yml/badge.svg)](https://github.com/RMI-PACTA/workflow.scenario.preparation/actions/workflows/docker.yml)
 <!-- badges: end -->
 
 Welcome to `workflow.scenario.preparation`! This tool is designed to streamline the preparation of input scenario datasets for use in either [workflow.data.preparation](https://github.com/RMI-PACTA/workflow.data.preparation) or the [r2dii](https://rmi-pacta.github.io/r2dii.analysis/) R packages.

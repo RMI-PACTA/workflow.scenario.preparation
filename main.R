@@ -12,6 +12,7 @@ if (fs::dir_exists(scenario_preparation_inputs_path)) {
   logger::log_info("Setting scenario preparation inputs path: {scenario_preparation_inputs_path}")
 } else {
   logger::log_error("Scenario preparation inputs path does not exist: {scenario_preparation_inputs_path}")
+  stop()
 }
 
 
@@ -24,6 +25,7 @@ if (fs::dir_exists(scenario_preparation_outputs_path)) {
   logger::log_info("Setting scenario preparation outputs path: {scenario_preparation_outputs_path}")
 } else {
   logger::log_error("Scenario preparation outputs path does not exist: {scenario_preparation_outputs_path}")
+  stop()
 }
 
 
