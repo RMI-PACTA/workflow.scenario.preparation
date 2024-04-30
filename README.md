@@ -1,8 +1,7 @@
 # workflow.scenario.preparation
 
 <!-- badges: start -->
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) 
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![docker](https://github.com/RMI-PACTA/workflow.scenario.preparation/actions/workflows/docker.yml/badge.svg)](https://github.com/RMI-PACTA/workflow.scenario.preparation/actions/workflows/docker.yml)
 <!-- badges: end -->
 
