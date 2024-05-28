@@ -142,6 +142,15 @@ for (scenario in scenarios_to_include) {
   scenarios_p4b <- dplyr::bind_rows(scenarios_p4b, scenario_i)
 }
 
+# get the common final year across scenario sources
+final_year <- dplyr::summarise(
+  scenarios_p4b,
+  final_year_source = max(year, na.rm = TRUE),
+  .by = "source"
+)
+
+final_year <- min(final_year$final_year_source, na.rm = TRUE)
+
 interpolation_groups <- c(
   "source",
   "scenario",
@@ -156,6 +165,7 @@ scenario_input_p4b <- scenarios_p4b %>%
   pacta.scenario.data.preparation::interpolate_yearly(!!!rlang::syms(interpolation_groups)) %>%
   filter(
     .data$year >= .env$reference_year,
+    .data$year <= .env$final_year,
     .data$sector %in% .env$market_share_sectors
   ) %>%
   pacta.scenario.data.preparation::add_market_share_columns(reference_year = reference_year) %>%
@@ -182,6 +192,7 @@ scenario_input_p4b_ei <- scenarios_p4b %>%
   pacta.scenario.data.preparation::interpolate_yearly(!!!rlang::syms(interpolation_groups)) %>%
   filter(
     .data$year >= .env$reference_year,
+    .data$year <= .env$final_year,
     .data$sector %in% .env$emission_intensity_sectors
   ) %>%
   pacta.scenario.data.preparation::format_p4b_ei()
