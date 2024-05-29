@@ -85,3 +85,16 @@ for (scenario in scenarios_to_include) {
 }
 
 logger::log_info("Finished processing scenarios.")
+
+
+# format and save scenarios for use in P4B -------------------------------------
+
+logger::log_info("Determining scenarios to include.")
+
+scenarios_to_include <- config$inherits
+
+logger::log_info("Scenarios to be included: {scenarios_to_include}")
+
+logger::log_info("Processing scenarios for P4B input.")
+
+source("format_scenarios_for_p4b.R")
