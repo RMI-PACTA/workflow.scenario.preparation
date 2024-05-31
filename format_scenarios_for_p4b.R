@@ -57,8 +57,6 @@ final_year <- dplyr::summarise(
   .by = "source"
 )
 
-final_year <- min(final_year$final_year_source, na.rm = TRUE)
-
 logger::log_info("Define interpolation groups for interpolation of yearly values.")
 
 interpolation_groups <- c(
@@ -81,8 +79,20 @@ scenario_input_p4b <- pacta.scenario.data.preparation::interpolate_yearly(
 scenario_input_p4b <- dplyr::filter(
   scenario_input_p4b,
   .data$year >= .env$reference_year,
-  .data$year <= .env$final_year,
   .data$sector %in% .env$market_share_sectors
+)
+
+final_year_by_sector_market_share <- dplyr::summarise(
+  scenario_input_p4b,
+  final_year = max(.data$year, na.rm = TRUE),
+  .by = "sector"
+)
+
+final_year_market_share <- min(final_year_by_sector_market_share$final_year, na.rm = TRUE)
+
+scenario_input_p4b <- dplyr::filter(
+  scenario_input_p4b,
+  .data$year <= .env$final_year_market_share
 )
 
 scenario_input_p4b <- pacta.scenario.data.preparation::add_market_share_columns(
@@ -119,8 +129,20 @@ scenario_input_p4b_ei <- pacta.scenario.data.preparation::interpolate_yearly(
 scenario_input_p4b_ei <- dplyr::filter(
   scenario_input_p4b_ei,
   .data$year >= .env$reference_year,
-  .data$year <= .env$final_year,
   .data$sector %in% .env$emission_intensity_sectors
+)
+
+final_year_by_sector_ei <- dplyr::summarise(
+  scenario_input_p4b,
+  final_year = max(.data$year, na.rm = TRUE),
+  .by = "sector"
+)
+
+final_year_ei <- min(final_year_by_sector_ei$final_year, na.rm = TRUE)
+
+scenario_input_p4b <- dplyr::filter(
+  scenario_input_p4b,
+  .data$year <= .env$final_year_ei
 )
 
 scenario_input_p4b_ei <- pacta.scenario.data.preparation::format_p4b_ei(scenario_input_p4b_ei)
