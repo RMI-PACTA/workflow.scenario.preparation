@@ -1,5 +1,23 @@
+# capture output and messages to a log file -------------------------------
+
+log_timestamp <- format(Sys.time(), format = "%Y%m%d_T%H%M%SZ", tz = "UTC")
+log_path <- paste0(log_timestamp, ".log")
+log_file_con <- file(description = log_path)
+
+sink(file = log_file_con, append = TRUE, type = "output", split = TRUE)
+sink(file = log_file_con, append = TRUE, type = "message")
+
+
+# to facilitate running locally in RStudio, read in env vars if available ------
+
+if (file.exists(".env")) { readRenviron(".env") }
+
+
+# ------------------------------------------------------------------------------
+
 logger::log_threshold(Sys.getenv("LOG_LEVEL", "INFO"))
 logger::log_formatter(logger::formatter_glue)
+
 
 # set general i/o paths --------------------------------------------------------
 
@@ -98,3 +116,16 @@ logger::log_info("Scenarios to be included: {scenarios_to_include}")
 logger::log_info("Processing scenarios for P4B input.")
 
 source("format_scenarios_for_p4b.R")
+
+
+# copy log file to outputs directory and turn off sink -------------------------
+
+log_archive_path <-
+  file.path(
+    scenario_preparation_outputs_path,
+    paste0(system_timestamp, ".log")
+  )
+
+file.copy(from = log_path, to = log_archive_path)
+
+sink(file = NULL)
