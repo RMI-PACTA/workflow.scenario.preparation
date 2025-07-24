@@ -3,11 +3,12 @@ logger::log_info("WEO 2024: Setting WEO 2024 config.")
 weo_2024_raw_path <- config[["weo_2024_raw_path"]]
 weo_2024_ext_data_regions_raw_filename <- config[["weo_2024_ext_data_regions_raw_filename"]]
 weo_2024_ext_data_world_raw_filename <- config[["weo_2024_ext_data_world_raw_filename"]]
-weo_2024_fig_chptr_3_raw_filename <- config[["weo_2024_fig_chptr_3_raw_filename"]]
-iea_global_ev_2024_raw_path <- config[["iea_global_ev_raw_path"]]
 iea_global_ev_2024_raw_filename <- config[["iea_global_ev_raw_filename"]]
+weo_2024_fig_chptr_3_raw_full_filepath <- config[["weo_2024_fig_chptr_3_raw_full_filepath"]]
 mpp_ats_raw_path <- config[["mpp_ats_raw_path"]]
 mpp_ats_raw_filename <- config[["mpp_ats_raw_filename"]]
+
+hybrid_methodology <- config[["hybrid_methodology"]]
 
 logger::log_info("WEO 2024: Setting WEO 2024 paths.")
 
@@ -29,21 +30,9 @@ weo_2024_ext_data_world_raw_full_filepath <-
     weo_2024_ext_data_world_raw_filename
   )
 
-weo_2024_fig_chptr_3_raw_full_filepath <-
-  file.path(
-    weo_2024_raw_full_path,
-    weo_2024_fig_chptr_3_raw_filename
-  )
-
-iea_global_ev_2024_raw_full_path <-
-  file.path(
-    scenario_preparation_inputs_path,
-    iea_global_ev_2024_raw_path
-  )
-
 iea_global_ev_2024_raw_full_filepath <-
   file.path(
-    iea_global_ev_2024_raw_full_path,
+    weo_2024_raw_full_path,
     iea_global_ev_2024_raw_filename
   )
 
@@ -87,10 +76,20 @@ weo_2024_fig_chptr_3_raw <-
   )
 
 iea_global_ev_2024_raw <-
-  readr::read_csv(
-    file = iea_global_ev_2024_raw_full_filepath,
-    show_col_types = FALSE
+  read_xlsx(
+    path = iea_global_ev_2024_raw_full_filepath,
+    sheet = "electric-vehicle-sales-by-regio"
   )
+
+iea_sales_share_ev <- read_xlsx(
+  path = iea_global_ev_2024_raw_full_filepath,
+  sheet = "electric vehicle share-ev"
+)
+
+iea_sales_share_bev_phev <- read_xlsx(
+  path = iea_global_ev_2024_raw_full_filepath,
+  sheet = "electric-vehicle-share-bev-phev"
+)
 
 mpp_ats_raw <-
   tidyxl::xlsx_cells(
@@ -100,11 +99,14 @@ mpp_ats_raw <-
 logger::log_info("WEO 2024: Processing WEO 2024 data.")
 
 weo_2024 <-
-  pacta.scenario.data.preparation::prepare_weo_2024_scenario(
+  prepare_weo_2024_scenario(
     weo_2024_ext_data_regions_raw,
     weo_2024_ext_data_world_raw,
     weo_2024_fig_chptr_3_raw,
     iea_global_ev_2024_raw,
+    iea_sales_share_ev,
+    iea_sales_share_bev_phev,
+    hybrid_methodology,
     mpp_ats_raw
   )
 
