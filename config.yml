@@ -54,15 +54,14 @@ weo_2023:
   mpp_ats_raw_path: "mpp_ats-20240227"
   mpp_ats_raw_filename: "2022-08-12 - MPP ATS - RPK and GHG intensity.xlsx"
 
-weo_2024:
+weo_2024_ecb:
   weo_2024_raw_path: "weo_2024/WEO2024 extended data"
   weo_2024_ext_data_regions_raw_filename: "WEO2024_Extended_Data_Regions.csv"
   weo_2024_ext_data_world_raw_filename: "WEO2024_Extended_Data_World.csv"
-  weo_2024_fig_chptr_3_raw_full_filepath: 'weo_2024/WEO2024 extended data/WEO2024_Figures_Chapter_03.xlsx'
+  weo_2024_fig_chptr_3_raw_full_filename: 'WEO2024_Figures_Chapter_03.xlsx'
   iea_global_ev_raw_filename: "electric-vehicle-sales-by-region-and-scenario-2030-and-2035.xlsx"
   mpp_ats_raw_path: "mpp_ats-20240227"
   mpp_ats_raw_filename: "2022-08-12 - MPP ATS - RPK and GHG intensity.xlsx"
-  hybrid_methodology: "hybrid_in_ev"
 
 2022Q4:
   inherits: [geco_2022, isf_2021, weo_2022]
@@ -71,4 +70,4 @@ weo_2024:
   inherits: [geco_2023, isf_2023, weo_2023]
 
 2024Q4:
-  inherits: [weo_2024]
+  inherits: [weo_2024_ecb]
