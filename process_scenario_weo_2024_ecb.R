@@ -105,7 +105,7 @@ mpp_ats_raw <-
 logger::log_info("WEO 2024: Processing WEO 2024 data.")
 
 weo_2024 <-
-  pacta.scenario.data.preparation::prepare_weo_2024_scenario(
+  pacta.scenario.data.preparation::prepare_weo_2024_ecb_scenario(
     weo_2024_ext_data_regions_raw,
     weo_2024_ext_data_world_raw,
     weo_2024_fig_chptr_3_raw,
