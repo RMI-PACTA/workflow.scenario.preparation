@@ -111,8 +111,6 @@ weo_2024 <-
     weo_2024_fig_chptr_3_raw,
     iea_global_ev_2024_raw,
     iea_sales_share_ev,
-    iea_sales_share_bev_phev,
-    hybrid_methodology,
     mpp_ats_raw
   )
 
