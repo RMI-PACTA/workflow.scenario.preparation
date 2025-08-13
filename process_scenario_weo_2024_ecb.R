@@ -117,7 +117,7 @@ weo_2024 <-
 if (pacta.data.validation::validate_intermediate_scenario_output(weo_2024)) {
   logger::log_info("WEO 2024: WEO 2024 data is valid.")
 
-  output_path <- fs::path(scenario_preparation_outputs_path, "weo_2024.csv")
+  output_path <- fs::path(scenario_preparation_outputs_path, "weo_2024_ecb.csv")
 
   readr::write_csv(
     x = weo_2024,
