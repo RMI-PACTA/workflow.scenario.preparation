@@ -15,7 +15,6 @@ if (fs::dir_exists(scenario_preparation_inputs_path)) {
   stop()
 }
 
-
 scenario_preparation_outputs_path <- Sys.getenv(
   "SCENARIO_PREPARATION_OUTPUTS_PATH",
   "./outputs"
