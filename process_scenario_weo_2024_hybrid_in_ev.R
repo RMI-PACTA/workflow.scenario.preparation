@@ -105,7 +105,7 @@ mpp_ats_raw <-
 logger::log_info("WEO 2024: Processing WEO 2024 data.")
 
 weo_2024 <-
-  pacta.scenario.data.preparation::prepare_weo_2024_ecb_scenario(
+  pacta.scenario.data.preparation::prepare_weo_2024_hybrid_in_ev_scenario(
     weo_2024_ext_data_regions_raw,
     weo_2024_ext_data_world_raw,
     weo_2024_fig_chptr_3_raw,
@@ -117,7 +117,7 @@ weo_2024 <-
 if (pacta.data.validation::validate_intermediate_scenario_output(weo_2024)) {
   logger::log_info("WEO 2024: WEO 2024 data is valid.")
 
-  output_path <- fs::path(scenario_preparation_outputs_path, "weo_2024_ecb.csv")
+  output_path <- fs::path(scenario_preparation_outputs_path, "weo_2024_hybrid_in_ev.csv")
 
   readr::write_csv(
     x = weo_2024,
