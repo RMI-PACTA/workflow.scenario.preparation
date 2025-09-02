@@ -91,12 +91,6 @@ iea_sales_share_ev <-
     sheet = "electric vehicle share-ev"
   )
 
-iea_sales_share_bev_phev <-
-  readxl::read_xlsx(
-    path = iea_global_ev_2024_raw_full_filepath,
-    sheet = "electric-vehicle-share-bev-phev"
-  )
-
 mpp_ats_raw <-
   tidyxl::xlsx_cells(
     path = mpp_ats_raw_full_filepath
