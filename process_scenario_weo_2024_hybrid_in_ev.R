@@ -37,7 +37,7 @@ iea_global_ev_2024_raw_full_filepath <-
 weo_2024_fig_chptr_3_raw_full_filepath <-
   file.path(
     weo_2024_raw_full_path,
-    weo_2024_fig_chptr_3_raw_full_filename
+    weo_2024_fig_chptr_3_raw_filename
   )
 
 mpp_ats_raw_full_path <-
