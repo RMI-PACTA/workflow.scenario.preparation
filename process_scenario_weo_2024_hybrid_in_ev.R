@@ -4,7 +4,7 @@ weo_2024_raw_path <- config[["weo_2024_raw_path"]]
 weo_2024_ext_data_regions_raw_filename <- config[["weo_2024_ext_data_regions_raw_filename"]]
 weo_2024_ext_data_world_raw_filename <- config[["weo_2024_ext_data_world_raw_filename"]]
 iea_global_ev_2024_raw_filename <- config[["iea_global_ev_raw_filename"]]
-weo_2024_fig_chptr_3_raw_full_filename <- config[["weo_2024_fig_chptr_3_raw_full_filename"]]
+weo_2024_fig_chptr_3_raw_filename <- config[["weo_2024_fig_chptr_3_raw_filename"]]
 mpp_ats_raw_path <- config[["mpp_ats_raw_path"]]
 mpp_ats_raw_filename <- config[["mpp_ats_raw_filename"]]
 
