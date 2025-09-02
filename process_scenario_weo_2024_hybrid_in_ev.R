@@ -106,12 +106,12 @@ logger::log_info("WEO 2024: Processing WEO 2024 data.")
 
 weo_2024 <-
   pacta.scenario.data.preparation::prepare_weo_2024_hybrid_in_ev_scenario(
-    weo_2024_ext_data_regions_raw,
-    weo_2024_ext_data_world_raw,
-    weo_2024_fig_chptr_3_raw,
-    iea_global_ev_2024_raw,
-    iea_sales_share_ev,
-    mpp_ats_raw
+    weo_2024_ext_data_regions_raw = weo_2024_ext_data_regions_raw,
+    weo_2024_ext_data_world_raw = weo_2024_ext_data_world_raw,
+    weo_2024_fig_chptr_3_raw = weo_2024_fig_chptr_3_raw,
+    iea_global_ev_2024_raw = iea_global_ev_2024_raw,
+    iea_sales_share_ev = iea_sales_share_ev,
+    mpp_ats_raw = mpp_ats_raw
   )
 
 if (pacta.data.validation::validate_intermediate_scenario_output(weo_2024)) {
