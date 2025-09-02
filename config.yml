@@ -58,7 +58,7 @@ weo_2024_hybrid_in_ev:
   weo_2024_raw_path: "weo_2024/WEO2024 extended data"
   weo_2024_ext_data_regions_raw_filename: "WEO2024_Extended_Data_Regions.csv"
   weo_2024_ext_data_world_raw_filename: "WEO2024_Extended_Data_World.csv"
-  weo_2024_fig_chptr_3_raw_full_filename: 'WEO2024_Figures_Chapter_03.xlsx'
+  weo_2024_fig_chptr_3_raw_filename: 'WEO2024_Figures_Chapter_03.xlsx'
   iea_global_ev_raw_filename: "electric-vehicle-sales-by-region-and-scenario-2030-and-2035.xlsx"
   mpp_ats_raw_path: "mpp_ats-20240227"
   mpp_ats_raw_filename: "2022-08-12 - MPP ATS - RPK and GHG intensity.xlsx"
