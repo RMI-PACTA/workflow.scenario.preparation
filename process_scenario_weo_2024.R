@@ -107,7 +107,8 @@ weo_2024 <-
     iea_sales_share_ev,
     iea_sales_share_bev_phev,
     hybrid_methodology,
-    mpp_ats_raw
+    mpp_ats_raw,
+    config_name
   )
 
 if (pacta.data.validation::validate_intermediate_scenario_output(weo_2024)) {
