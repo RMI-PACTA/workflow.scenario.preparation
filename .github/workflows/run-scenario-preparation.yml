@@ -50,7 +50,7 @@ jobs:
 
       # https://github.com/marketplace/actions/azure-cli-action#workflow-to-execute-an-azure-cli-script-of-a-specific-cli-version
       - name: Start Container Instance
-        uses: azure/CLI@v2
+        uses: azure/CLI@v3
         env:
           FULL_IMAGE_NAME: ${{ inputs.image-tag }}
           R_CONFIG_ACTIVE: ${{ matrix.config_active }}
